@@ -2,7 +2,7 @@
   <v-container fluid>
     <bufferRoot />
     <v-row>
-      <v-col v-for="n in 6" :key="n" sm="12" md="4">
+      <v-col v-for="n in 6" :key="n" sm="6" md="4" xs="12">
         <cardRoot></cardRoot>
       </v-col>
     </v-row>

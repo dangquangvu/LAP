@@ -6,7 +6,7 @@ import vuetify from "./plugins/vuetify";
 import "@babel/polyfill";
 
 Vue.config.productionTip = false;
-Vue.config.ignoredElements = [/^ion-/]
+Vue.config.ignoredElements = [/^ion-/];
 new Vue({
     router: router,
     store,

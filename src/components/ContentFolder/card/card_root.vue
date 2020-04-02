@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       card_root: {
+        id:1,
         title: "Tiếng nhật",
         description: "0 thuật ngữ",
         img: "https://cdn.vuetifyjs.com/images/cards/desert.jpg",
