@@ -45,7 +45,7 @@ const routes = [
   },
   { path: "/login", component: LoginPage },
   { path: "/register", component: RegisterPage },
-  { path: '*', redirect: '/' }
+  { path: '*', redirect: '/dashboard' }
 ];
 
 // router.beforeEach((to, from, next) => {
