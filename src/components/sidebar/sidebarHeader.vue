@@ -3,7 +3,7 @@
   <v-list dense>
     <template v-for="item in items">
       <router-link :key="item.id" :to="item.to">
-        <v-list-item  link>
+        <v-list-item link>
           <v-list-item-action>
             <ion-icon :name="item.icon" class="fontSize"></ion-icon>
           </v-list-item-action>
@@ -24,17 +24,17 @@ export default {
   components: {},
   data: () => ({
     items: [
-      {id:1, icon: "home-outline", text: "Trang Chủ",to:"/" },
-      {id:2, icon: "settings-outline", text: "Cài đặt",to:"/action" },
+      { id: 1, icon: "home-outline", text: "Trang Chủ", to: "/home/main" },
+      { id: 2, icon: "settings-outline", text: "Cài đặt", to: "/home/action" }
       // {id:3, icon: "bookmarks-outline", text: "Học phần" ,to:"/action"},
       // {id:4, icon: "folder-open-outline", text: "Thư mục" ,to:"/action"},
     ]
-  }),
+  })
 };
 </script>
 
 <style scoped>
 .fontSize {
   font-size: 30px;
-}</style
->>
+}
+</style>

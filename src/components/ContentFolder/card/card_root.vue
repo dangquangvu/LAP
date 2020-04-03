@@ -1,5 +1,5 @@
 <template>
-    <v-card class=" 90vw" style="margin:10px; max-height: 130px">
+    <v-card class=" 90vw" style="margin:10px; max-height: 130px" :outlined="true">
       <v-card-title primary-title>
         <div>
           <h4 class="headline mb-0">{{ card_root.title }}</h4>
