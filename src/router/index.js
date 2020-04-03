@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Mainpage from "../components/Mainpage.vue";
 import Action from "../views/Action.vue";
 import LoginPage from "../views/login.vue";
+import Dashboard from "../views/Dashboard.vue";
 // import App from "../App.vue";
 import RegisterPage from "../views/register.vue";
 // import CardId from ""
@@ -21,11 +22,11 @@ const routes = [
   //   // }, ]
   // },
 
-  // {
-  //   path: "/dashboard",
-  //   name: "main",
-  //   component: App
-  // },
+  {
+    path: "/dashboard",
+    name: "main",
+    component: Dashboard
+  },
   {
     path: "/home",
     name: "home",
@@ -43,7 +44,8 @@ const routes = [
     ]
   },
   { path: "/login", component: LoginPage },
-  { path: "/register", component: RegisterPage }
+  { path: "/register", component: RegisterPage },
+  { path: '*', redirect: '/' }
 ];
 
 // router.beforeEach((to, from, next) => {

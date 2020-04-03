@@ -38,7 +38,7 @@
       </v-btn>
     </v-app-bar>
     <!-- style="padding-top: 0px" -->
-    <v-content >
+    <v-content style="">
       <router-view></router-view>
     </v-content>
   </v-app>
