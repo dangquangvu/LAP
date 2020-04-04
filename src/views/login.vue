@@ -71,6 +71,9 @@
                       counter
                       required
                     ></v-text-field>
+                    <v-alert v-if="message" type="error">
+                      {{ message }}
+                    </v-alert>
                     <a href="">Forgot Password</a><br />
                     <router-link to="/register">Register</router-link>
                     <br />
@@ -92,14 +95,6 @@
                           <span>Login</span></v-btn
                         >
                       </v-flex>
-                      <!-- <v-flex  xs4>
-                        <v-btn
-                        to="/register"
-                        :class="{
-                            'blue darken-4 white--text': 'true'
-                          }"
-                        >Register</v-btn
-                      > </v-flex> -->
                     </v-layout>
                   </v-form>
                 </v-form>
@@ -140,44 +135,33 @@ export default {
     };
   },
   computed: {
-    //   loggedIn() {
-    //     return this.$store.state.auth.status.loggedIn;
-    //   }
-    // },
-    // created() {
-    //   if (this.loggedIn) {
-    //     this.$router.push("/home");
-    //   }
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("home/main");
+    }
   },
   methods: {
     submit() {
       this.loading = true;
-      console.log(this.email, this.password);
       if (this.email && this.password) {
         this.$store
-          .dispatch("auth/login", { email: this.email, password: this.password })
-          .then(
-            () => {
-              this.$router.push("/home");
-            },
-            error => {
-              this.loading = false;
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-            }
-          );
+          .dispatch("auth/login", {
+            email: this.email,
+            password: this.password
+          })
+          .then(() => {
+            this.$router.push("home/main");
+          })
+          .catch(error => {
+            this.loading = false;
+            this.message = error.response.data.message;
+          });
       }
     }
-    // submit() {
-    //   if (this.$refs.form.validate()) {
-    //     this.$refs.form.$el.submit();
-    //   }
-    // },
-    // clear() {
-    //   this.$refs.form.reset();
-    // }
   }
 };
 </script>

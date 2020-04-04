@@ -25,7 +25,9 @@ export default {
   data: () => ({
     items: [
       { id: 1, icon: "home-outline", text: "Trang Chủ", to: "/home/main" },
-      { id: 2, icon: "settings-outline", text: "Cài đặt", to: "/home/action" }
+      { id: 2, icon: "settings-outline", text: "Cài đặt", to: "/home/action" },
+      { id: 3, icon: "create-outline", text: "Tạo thẻ mới", to: "/home/create_card" },
+//<ion-icon name="create-outline"></ion-icon>
       // {id:3, icon: "bookmarks-outline", text: "Học phần" ,to:"/action"},
       // {id:4, icon: "folder-open-outline", text: "Thư mục" ,to:"/action"},
     ]
