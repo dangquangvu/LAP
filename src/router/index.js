@@ -6,7 +6,6 @@ import LoginPage from "../views/login.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Mainpage from "../components/Mainpage.vue";
 import CreateCard from "../components/CreateCard"
-// import App from "../App.vue";
 import RegisterPage from "../views/register.vue";
 // import CardId from ""
 
@@ -50,7 +49,7 @@ export const router = new VueRouter({
                 },
                 {
                     path: "/home/create_card",
-                    name: "action",
+                    name: "create card",
                     component: CreateCard
                 },
             ]
