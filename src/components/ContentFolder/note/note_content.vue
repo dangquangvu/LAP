@@ -64,7 +64,7 @@ export default {
           index: this.index,
           text: val,
         };
-        this.$store.commit("createCard/editItem", item);
+        this.$store.commit("createCard/addTextField", item);
       }
     },
     text_explain(val, oldVal) {
@@ -73,7 +73,7 @@ export default {
           index: this.index,
           explain: val,
         };
-        this.$store.commit("createCard/editItem", item);
+        this.$store.commit("createCard/addTextField", item);
       }
     },
   },
