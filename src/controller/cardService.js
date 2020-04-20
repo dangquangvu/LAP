@@ -11,10 +11,12 @@ class cardService {
                     title: object.title,
                     description: object.description,
                     total: object.arrayCard.length,
-                    author: object.author
+                    author: object.author,
+                    arrayCard: object.arrayCard
                 }, { headers: { "Content-Type": "application/json" } }
             )
             .then(response => {
+                // console.log(object, object.arrayCard.length)
                 return response.data;
             })
             .catch(err => {

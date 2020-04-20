@@ -4,9 +4,17 @@
       <v-container fluid fill-height class="">
         <v-layout flex>
           <v-flex xs11 sm12>
-            <v-snackbar v-model="open" >
+            <v-snackbar
+              v-model="open"
+              :color="color"
+              :multi-line="mode === 'multi-line'"
+              :right="x === 'right'"
+              :timeout="timeout"
+              :top="y === 'top'"
+              :vertical="mode === 'vertical'"
+            >
               {{ message }}
-              <v-btn color="red" text @click="open = false">
+              <v-btn dark text @click="open = false">
                 Close
               </v-btn>
             </v-snackbar>
@@ -83,6 +91,11 @@ export default {
     item: { index: "", show: true },
     message: "",
     open: false,
+    color: "",
+    mode: "",
+    timeout: 3000,
+    x: "right",
+    y: "top",
   }),
   computed: {},
   components: {
@@ -91,7 +104,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-         this.snackbar = true;
+        this.snackbar = true;
         let value = {
           title: this.title,
           description: this.description,
@@ -99,15 +112,15 @@ export default {
         this.$store
           .dispatch("createCard/createCard", value)
           .then((data) => {
-           this.open = true;
+            this.color = "success";
+            this.open = true;
             this.message = data.message;
-            console.log(data);
-
-            // this.$router.push("home/main");
+            this.$router.push("/home/main");
           })
           .catch((error) => {
-            this.loading = false;
-            this.message = error;
+            this.color = "error";
+            this.open = true;
+            this.message = error.message;
           });
       }
     },

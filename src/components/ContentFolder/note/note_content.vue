@@ -11,7 +11,6 @@
                 ><br />
               </v-flex>
               <v-spacer></v-spacer>
-
               <v-flex xs1>
                 <!-- <v-btn class="mx-2" fab dark  small color="white" ></v-btn> -->
                   <ion-icon

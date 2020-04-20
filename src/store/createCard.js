@@ -59,7 +59,7 @@ export const createCard = {
                 arrayCard: filtersItemWithValue,
             };
             state.object = object;
-            console.log(state.object)
+            // console.log(state.object)
         },
     },
 };
