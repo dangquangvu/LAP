@@ -5,11 +5,16 @@ import Action from "../views/Action.vue";
 import LoginPage from "../views/login.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Mainpage from "../components/Mainpage.vue";
-import CreateCard from "../components/CreateCard"
+import CreateCard from "../components/CreateCard";
 import RegisterPage from "../views/register.vue";
 // import CardId from ""
 
 Vue.use(VueRouter);
+
+// function lazyLoad(view) {
+//     return () =>
+//         import (`@/views/${view}.vue`);
+// }
 
 export const router = new VueRouter({
     base: process.env.BASE_URL,
@@ -28,7 +33,7 @@ export const router = new VueRouter({
         {
             path: "/dashboard",
             name: "main",
-            component: Dashboard
+            component: Dashboard,
         },
         {
             path: "/home",
@@ -45,21 +50,20 @@ export const router = new VueRouter({
                 {
                     path: "/home/action",
                     name: "action",
-                    component: Action
+                    component: Action,
                 },
                 {
                     path: "/home/create_card",
                     name: "create card",
-                    component: CreateCard
+                    component: CreateCard,
                 },
-            ]
+            ],
         },
         { path: "/login", component: LoginPage, meta: { authRequired: true } },
         { path: "/register", component: RegisterPage },
         { path: "*", redirect: "/dashboard" },
         // { path: "/home", redirect: "/home/main" },
-
-    ]
+    ],
 });
 
 router.beforeEach((to, from, next) => {

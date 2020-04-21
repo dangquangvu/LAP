@@ -55,7 +55,10 @@ export const createCard = {
             let object = {
                 title: value.title,
                 description: value.description,
-                author: user.user._id,
+                author_id: user.user._id,
+                author: user.user.fullname,
+                author_email: user.user.email,
+                author_img: '',
                 arrayCard: filtersItemWithValue,
             };
             state.object = object;

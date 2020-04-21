@@ -12,14 +12,31 @@ class cardService {
                     description: object.description,
                     total: object.arrayCard.length,
                     author: object.author,
-                    arrayCard: object.arrayCard
+                    author_id: object.author_id,
+                    author_email: object.author_email,
+                    author_img: object.img,
+                    arrayCard: object.arrayCard,
                 }, { headers: { "Content-Type": "application/json" } }
             )
-            .then(response => {
-                // console.log(object, object.arrayCard.length)
+            .then((response) => {
                 return response.data;
             })
-            .catch(err => {
+            .catch((err) => {
+                return err.data;
+            });
+    }
+    getAllCardFolder(id) {
+        return axios
+            .post(
+                API_URL + "getAllCardFolder", {
+                    author_id: id,
+                }, { headers: { "Content-Type": "application/json" } }
+            )
+            .then((response) => {
+                console.log(response.data)
+                return response.data;
+            })
+            .catch((err) => {
                 return err.data;
             });
     }

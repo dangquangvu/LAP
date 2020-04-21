@@ -8,17 +8,19 @@
       :to="item.to"
     >
       <v-card-title primary-title>
-        <div v-if="card">
-          <h5 class="headline mb-0">{{ card.title }}</h5>
-          <h6 class="font-weight-light pl-1">{{ card.total }} thuật ngữ</h6>
+        <div>
+          <h5 class="headline mb-0">{{ card_root.title }}</h5>
+          <h6 class="font-weight-light pl-1">
+            {{ card_root.description }} 
+          </h6>
           <div class="d-inline-flex pa-2 pl-0" style=";align-content: center;">
             <v-img
-              :src="card.img"
+              :src="card_root.img"
               aspect-ratio=""
               style="font-size: 15px;border-radius: 50%;width : 25px; height: 25px; margin:5px"
             ></v-img>
             <v-card-title class="pt-0 mt-0 pl-1">{{
-              card.author
+              card_root.author
             }}</v-card-title>
           </div>
         </div>
@@ -32,11 +34,19 @@ export default {
   props: ["card"],
   data() {
     return {
+      card_root: {
+        id: 1,
+        title: "Tiếng nhật",
+        description: "0 thuật ngữ",
+        img: "https://cdn.vuetifyjs.com/images/cards/desert.jpg",
+        author: "xyz",
+      },
       item: {
         to: "/home/action",
       },
     };
   },
+  computed: {},
   methods: {
     doSomething() {
       console.log("heeeeee");

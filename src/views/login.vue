@@ -141,6 +141,7 @@ export default {
   },
   created() {
     if (this.loggedIn) {
+      // this.$store.dispatch("cardFolder/getAllCardFolder");
       this.$router.push("home/main");
     }
   },
