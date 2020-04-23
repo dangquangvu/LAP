@@ -7,7 +7,7 @@
       color="#4257b2"
       dark
     >
-      <ion-icon name="arrow-back-outline"></ion-icon>
+     <ion-icon name="arrow-back-outline"></ion-icon>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">LAP</span>
       </v-toolbar-title>
