@@ -115,7 +115,7 @@ export default {
             this.color = "success";
             this.open = true;
             this.message = data.message;
-            this.$router.push("/home/main");
+            setTimeout(this.$router.push("/home/main"), 1000);
           })
           .catch((error) => {
             this.color = "error";

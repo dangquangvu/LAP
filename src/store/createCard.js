@@ -4,10 +4,10 @@ import cardService from '../controller/cardService'
 export const createCard = {
     namespaced: true,
     state: {
-        item: { index: "", text: "", explain: "", show: true },
+        item: { index: "", text: "", explain: "", author_id: '', author: '', cardFolderId: '', show: true },
         arrayCardCreate: [
-            { index: 1, text: "", explain: "", show: true },
-            { index: 2, text: "", explain: "", show: true },
+            { index: 1, text: "", explain: "", author_id: '', author: '', cardFolderId: '', show: true },
+            { index: 2, text: "", explain: "", author_id: '', author: '', cardFolderId: '', show: true },
         ],
         object: {},
     },
@@ -51,6 +51,9 @@ export const createCard = {
             );
             for (let i = 1; i <= filtersItemWithValue.length; i++) {
                 filtersItemWithValue[i - 1].index = i;
+                filtersItemWithValue[i - 1].author = user.user.fullname;
+                filtersItemWithValue[i - 1].author_id = user.user._id;
+                filtersItemWithValue[i - 1].index = 1;
             }
             let object = {
                 title: value.title,
@@ -62,7 +65,7 @@ export const createCard = {
                 arrayCard: filtersItemWithValue,
             };
             state.object = object;
-            // console.log(state.object)
+            console.log(state.object)
         },
     },
 };

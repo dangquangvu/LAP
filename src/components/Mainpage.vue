@@ -4,7 +4,7 @@
     <v-row v-if="arrShowLoading">
       <template v-for="(n, i) in arrShow">
         <v-col :key="i" sm="6" md="4" cols="12">
-          <cardRoot :card="n"></cardRoot>
+          <cardRoot :card="n" @click="doanything()"></cardRoot>
         </v-col>
       </template>
     </v-row>
@@ -40,14 +40,14 @@ export default {
         console.log(data)
         this.arrShow = data.message;
         this.arrShowLoading = true;
-        console.log('eemememmemememmmmmm')
         this.$store.dispatch("cardFolder/submit",data.message)
       }else {
         this.arrShow = this.$store.state.cardFolder.arrShow;
         this.arrShowLoading = true;
-        console.log('em ra roi nah')
       }
-    },
+    },doanything(){
+      console.log('hello')
+    }
   },
   components: {
     carousel,

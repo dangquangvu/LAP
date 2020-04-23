@@ -7,7 +7,7 @@ import Dashboard from "../views/Dashboard.vue";
 import Mainpage from "../components/Mainpage.vue";
 import CreateCard from "../components/CreateCard";
 import RegisterPage from "../views/register.vue";
-// import CardId from ""
+import CardId from "../components/CardId.vue"
 
 Vue.use(VueRouter);
 
@@ -19,21 +19,14 @@ Vue.use(VueRouter);
 export const router = new VueRouter({
     base: process.env.BASE_URL,
     mode: "history",
-    routes: [
-        // {
-        //   path: "/",
-        //   name: "Mainpage",
-        //   component: Mainpage
-        //   // children: [{
-        //   //     path: '/card/:id',
-        //   //     component: cardId
-        //   // }, ]
-        // },
-
-        {
+    routes: [{
             path: "/dashboard",
             name: "main",
             component: Dashboard,
+        },
+        {
+            path: '/card/:id',
+            component: CardId
         },
         {
             path: "/home",
@@ -42,10 +35,6 @@ export const router = new VueRouter({
             children: [{
                     path: "/home/main",
                     component: Mainpage,
-                    // children: [{
-                    //     path: '/card/:id',
-                    //     component: cardId
-                    // }, ]
                 },
                 {
                     path: "/home/action",

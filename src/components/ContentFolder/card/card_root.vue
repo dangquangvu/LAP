@@ -2,11 +2,11 @@
   <v-hover v-slot:default="{ hover }">
     <v-card
       class="90vw card_hover"
-      style="margin:10px; max-height: 130px"
+      style="margin:10px; max-height: 130px;cursor: pointer"
       :elevation="hover ? 8 : 4"
-      @click.native="doSomething()"
-      :to="item.to"
+      @click.native="sendrequest()"
     >
+      <!-- :to="item.to" -->
       <v-card-title primary-title>
         <div v-if="card">
           <h5 class="headline mb-0">{{ card.title }}</h5>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import cardService from "../../../controller/cardService";
+// const user = JSON.parse(localStorage.getItem("user"));
 export default {
   props: ["card"],
   data() {
@@ -38,8 +40,31 @@ export default {
     };
   },
   methods: {
-    doSomething() {
-      console.log("heeeeee");
+    async sendrequest() {
+      let result= this.$store.state.cardPool.arrPool.filter(item=>item.idFolder == this.card._id)
+      console.log(result)
+      if(result.length == 0){
+        await cardService
+        .getAllCardPool(this.card._id)
+        .then((data) => {
+          let value = {
+            idFolder: this.card._id,
+            arrPool: data.message
+          }
+          console.log(value)
+          this.$store.commit("cardPool/setShow",value)
+          this.$store.dispatch("cardPool/addItemInArrAct",value)
+          this.$router.push(`/card/${this.card._id}`);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }else{
+        await this.$store.commit("cardPool/setShow",result)
+        this.$router.push(`/card/${this.card._id}`);
+        console.log(result)
+        return result;
+      }
     },
   },
 };

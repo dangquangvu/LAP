@@ -7,7 +7,7 @@
       color="#4257b2"
       dark
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <ion-icon name="arrow-back-outline"></ion-icon>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">LAP</span>
       </v-toolbar-title>
@@ -31,29 +31,27 @@
         /></v-avatar>
       </v-btn>
     </v-app-bar>
-    <v-navigation-drawer
-      v-model="drawer"
-      :clipped="$vuetify.breakpoint.lgAndUp"
-      app
-    >
-      <navSidebar></navSidebar>
-    </v-navigation-drawer>
+    
     <!-- style="padding-top: 0px" -->
     <v-content style="">
-      <router-view></router-view>
+      <cardShow></cardShow>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import navSidebar from "../components/sidebar/sidebarHeader";
+import cardShow from "../components/leanCard/showCard"
 export default {
-  props: [],
-  data: () => ({
-    drawer: null
-  }),
-  components: {
-    navSidebar
-  }
-};
+    data(){
+        return {
+            drawer : null,
+        }
+    },components:{
+        cardShow
+    }
+}
 </script>
+
+<style>
+
+</style>

@@ -40,6 +40,19 @@ class cardService {
                 return err.data;
             });
     }
+    getAllCardPool(id) {
+        return axios
+            .post(
+                API_URL + `getAllCardFolder/${id}`
+            )
+            .then((response) => {
+                console.log(response.data)
+                return response.data;
+            })
+            .catch((err) => {
+                return err.data;
+            });
+    }
 }
 
 export default new cardService();
