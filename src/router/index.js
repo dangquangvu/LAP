@@ -8,6 +8,10 @@ import Mainpage from "../components/Mainpage.vue";
 import CreateCard from "../components/CreateCard";
 import RegisterPage from "../views/register.vue";
 import CardId from "../components/CardId.vue"
+// import perSlide from "../components/ContentFolder/slick/perSlide.vue"
+
+// import flashcard from "../components/leanCard/flashcard.vue"
+// import vueFlashcard from "../components/leanCard/vue_flashcard";
 
 Vue.use(VueRouter);
 
@@ -25,8 +29,9 @@ export const router = new VueRouter({
             component: Dashboard,
         },
         {
-            path: '/card/:id',
-            component: CardId
+            path: "/card/:id?",
+            component: CardId,
+            //CardId
         },
         {
             path: "/home",

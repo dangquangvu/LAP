@@ -33,14 +33,14 @@
     </v-app-bar>
     
     <!-- style="padding-top: 0px" -->
-    <v-content style="">
+    <v-content class="grey  lighten-5" >
       <cardShow></cardShow>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import cardShow from "../components/leanCard/showCard"
+import cardShow from "./showCard"
 export default {
     data(){
         return {

@@ -8,8 +8,13 @@ export const cardPool = {
         showCardPool: {},
     },
     actions: {
-        addItemInArrAct({ commit }, value) {
-            commit("addItemInArr", value);
+        addItemInArrAct({ commit, state }, value) {
+            let exist = state.arrPool.filter((item) => {
+                item.idFolder == value.idFolder;
+            });
+            if (!exist) {
+                commit("addItemInArr", value);
+            }
         },
         getValueAct({ commit }, id) {
             commit("getValue", id);

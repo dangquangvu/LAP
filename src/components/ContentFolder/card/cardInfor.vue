@@ -6,10 +6,10 @@
         class="pl-5 text--size"
         style="border-right:1px solid grey"
       >
-        <div class="text--size">a</div></v-col
+        <div class="text--size">{{card.text?card.text:'...'}}</div></v-col
       >
       <v-col cols="5" class="text--size">
-        <div class="text--size">a</div></v-col
+        <div class="text--size">{{card.explain?card.explain:'...'}}</div></v-col
       >
       <v-col cols="2" class="text--size">
         <template v-if="value">
@@ -32,6 +32,7 @@
 </template>
 <script>
 export default {
+  props: ["card"],
   data() {
     return {
       value: true,
