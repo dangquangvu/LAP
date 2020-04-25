@@ -7,18 +7,10 @@ import Dashboard from "../views/Dashboard.vue";
 import Mainpage from "../components/Mainpage.vue";
 import CreateCard from "../components/CreateCard";
 import RegisterPage from "../views/register.vue";
-import CardId from "../components/CardId.vue"
-// import perSlide from "../components/ContentFolder/slick/perSlide.vue"
-
-// import flashcard from "../components/leanCard/flashcard.vue"
-// import vueFlashcard from "../components/leanCard/vue_flashcard";
+import CardId from "../views/CardId.vue"
+import leanCard from "../views/leanCard"
 
 Vue.use(VueRouter);
-
-// function lazyLoad(view) {
-//     return () =>
-//         import (`@/views/${view}.vue`);
-// }
 
 export const router = new VueRouter({
     base: process.env.BASE_URL,
@@ -31,7 +23,10 @@ export const router = new VueRouter({
         {
             path: "/card/:id?",
             component: CardId,
-            //CardId
+        },
+        {
+            path: "/leanCard/:id?",
+            component: leanCard,
         },
         {
             path: "/home",

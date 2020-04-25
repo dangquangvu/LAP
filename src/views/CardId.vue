@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import cardShow from "./showCard"
+import cardShow from "../components/showCard"
 export default {
     data(){
         return {

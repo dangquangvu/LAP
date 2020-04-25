@@ -33,7 +33,6 @@ class cardService {
                 }, { headers: { "Content-Type": "application/json" } }
             )
             .then((response) => {
-                console.log(response.data)
                 return response.data;
             })
             .catch((err) => {
@@ -46,12 +45,21 @@ class cardService {
                 API_URL + `getAllCardFolder/${id}`
             )
             .then((response) => {
-                console.log(response.data)
                 return response.data;
             })
             .catch((err) => {
                 return err.data;
             });
+    }
+    getInforCardFolder(id) {
+        return axios.post(
+            API_URL + `getInforCardFolder/${id}`
+        ).then(res => {
+            return res.data;
+        }).
+        catch(err => {
+            return err.data;
+        })
     }
 }
 

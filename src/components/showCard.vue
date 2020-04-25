@@ -5,10 +5,9 @@
         <v-row style="justify:center">
           <v-col xs="12" sm="8" md="8" lg="6" cols="12">
             <v-card-title class="text--grey">
-              <h1>abc</h1>
+              <h1 v-if="admin.title">{{ admin.title }}</h1>
             </v-card-title>
             <template v-if="number != -1">
-              <div>aaaaa</div>
               <carousel
                 :responsive="{
                   0: { items: 1 },
@@ -29,7 +28,6 @@
               </carousel>
             </template>
             <template v-else-if="number == -1">
-              <div>b</div>
               <carousel
                 :responsive="{
                   0: { items: 1 },
@@ -108,15 +106,16 @@ export default {
         text: "aaa",
         back: "baaaa",
       },
+      admin: {},
     };
   },
   mounted() {
     this.getData();
   },
   methods: {
-    async getData() {
+    getData() {
       if (!this.$store.state.cardPool.showCardPool.idFolder) {
-        await cardService
+        cardService
           .getAllCardPool(this.id)
           .then((data) => {
             let value = {
@@ -127,7 +126,15 @@ export default {
             this.$store.dispatch("cardPool/addItemInArrAct", value);
             this.arr = data.message;
             this.number = data.message.length == 0 ? -1 : data.message.length;
-            console.log(this.arr, this.number);
+            cardService
+              .getInforCardFolder(this.id)
+              .then((data) => {
+                console.log(data);
+                this.admin = data.message[0];
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log(err);
@@ -138,7 +145,18 @@ export default {
           this.$store.state.cardPool.showCardPool.arrPool.length == 0
             ? -1
             : this.$store.state.cardPool.showCardPool.arrPool.length;
-        console.log(this.arr, this.number);
+        if (this.$store.state.cardFolder.folderFocus[0].title) {
+          this.admin = this.$store.state.cardFolder.folderFocus[0];
+        } else {
+          cardService
+            .getInforCardFolder(this.id)
+            .then((data) => {
+              this.admin = data.message[0];
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       }
     },
   },

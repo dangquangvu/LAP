@@ -42,7 +42,6 @@ export default {
   methods: {
     async sendrequest() {
       let result= this.$store.state.cardPool.arrPool.filter(item=>item.idFolder == this.card._id)
-      console.log(result)
       if(result.length == 0){
         await cardService
         .getAllCardPool(this.card._id)
@@ -54,6 +53,7 @@ export default {
           console.log(value)
           this.$store.commit("cardPool/setShow",value)
           this.$store.dispatch("cardPool/addItemInArrAct",value)
+          this.$store.dispatch("cardFolder/cardFolderFocus",this.card._id)
           this.$router.push(`/card/${this.card._id}`);
         })
         .catch((err) => {

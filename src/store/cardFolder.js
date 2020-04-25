@@ -8,12 +8,16 @@ export const cardFolder = {
         arrShow: [{
             author_id: "",
         }, ],
+        folderFocus: {}
     },
 
     actions: {
         submit({ commit }, value) {
             commit("arrCardFolderVux", value);
         },
+        cardFolderFocus({ commit }, id) {
+            commit("findCardFolder", id)
+        }
     },
     mutations: {
         arrCardFolderVux(state, value) {
@@ -25,5 +29,9 @@ export const cardFolder = {
             }
             console.log(state.arrShow, "eeeeeeeeeeee");
         },
+        findCardFolder(state, id) {
+            let result = state.arrCardFolder.filter(item => item._id == id)
+            state.folderFocus = result;
+        }
     },
 };
