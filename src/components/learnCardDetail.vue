@@ -14,6 +14,8 @@
 <script>
 import navLearn from "../components/leanCard/navLearnDetail";
 import quizLearn from "../components/leanCard/quizCard";
+import quiz from "../controller/quiz";
+// import cardService from "../controller/cardService";
 export default {
   data() {
     return {
@@ -21,8 +23,44 @@ export default {
         total: 10,
         remember: 1,
         forget: 9,
+        id: null,
+        quiz: null,
       },
     };
+  },
+  mounted() {
+    this.id = this.$route.params.id;
+    this.generateQuiz();
+  },
+  methods: {
+    async generateQuiz() {
+      if (
+        !this.$store.state.quiz.quiz &&
+        this.$store.state.cardPool.showCardPool
+      ) {
+        console.log( this.$store.state.cardPool.showCardPool.arrPool)
+        let data = quiz.randomQuiz(
+          this.$store.state.cardPool.showCardPool.arrPool
+        );
+        this.$store.dispatch("quiz/assginQuizAct", data);
+        this.quiz = data;
+        console.log("aaaa", data);
+      } else if (
+        !this.$store.state.quiz.quiz &&
+        !this.$store.state.showCardPool
+      ) {
+        console.log(this.id ,'iddddddddd')
+        quiz.generationQuiz(this.id).then((data) => {
+          console.log(data.message);
+          this.$store.dispatch("quiz/assginQuizAct", data.message);
+          this.quiz = data.message;
+          console.log(this.quiz,'xxxxxxx');
+        });
+      } else if (this.$store.state.quiz.quiz) {
+        this.quiz = this.$store.state.quiz.quiz;
+        console.log(this.quiz);
+      }
+    },
   },
   components: {
     navLearn,

@@ -5,6 +5,7 @@ export const cardPool = {
     state: {
         arrPool: [],
         result: {},
+        // value show all flash card of folder
         showCardPool: {},
     },
     actions: {

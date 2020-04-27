@@ -47,13 +47,13 @@
 </template>
 
 <script>
+import Quiz from "../../controller/quiz";
 export default {
   data() {
     return {
       quiz: [
         {
-          text:
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+          text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
           ans: [{ text: "a" }, { text: "b" }, { text: "c" }, { text: "d" }],
           ques: { text: "b" },
         },
@@ -72,6 +72,7 @@ export default {
   },
   mounted() {
     this.contruct();
+    this.generationQuiz();
   },
   methods: {
     contruct() {
@@ -110,6 +111,15 @@ export default {
     },
     returnLearn() {
       this.number = 1;
+    },
+    generationQuiz() {
+      Quiz.generationQuiz()
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

@@ -5,6 +5,7 @@ import { auth } from "./acount";
 import { createCard } from "./createCard";
 import { cardFolder } from "./cardFolder";
 import { cardPool } from "./cardPool";
+import { quiz } from "./quiz";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,6 +13,7 @@ export default new Vuex.Store({
         auth,
         createCard,
         cardFolder,
-        cardPool
+        cardPool,
+        quiz
     }
 });

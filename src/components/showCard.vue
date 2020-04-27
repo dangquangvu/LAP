@@ -61,13 +61,16 @@
                 Thẻ ghi nhớ</v-col
               >
               <v-col xs="12" sm="12" cols="12" class="pl-8">
-                <ion-icon
-                  name="book-outline"
-                  style="font-size: 25px;color: #4257b2;fill: #4257b2;"
-                  class="pr-2 text--grey"
-                ></ion-icon>
-                Học</v-col
+                <router-link :to="to">
+                  <ion-icon
+                    name="book-outline"
+                    style="font-size: 25px;color: #4257b2;fill: #4257b2;"
+                    class="pr-2 text--grey"
+                  ></ion-icon>
+                  Học
+                </router-link></v-col
               >
+
               <v-col xs="12" sm="12" cols="12" class="pl-8">
                 <ion-icon
                   name="document-text-outline"
@@ -95,6 +98,7 @@ import carousel from "vue-owl-carousel";
 import cardInfor from "../components/ContentFolder/card/cardInfor";
 import cardService from "../controller/cardService";
 import flashCard from "../components/leanCard/flashcard";
+import quiz from "../controller/quiz";
 export default {
   data() {
     return {
@@ -107,6 +111,7 @@ export default {
         back: "baaaa",
       },
       admin: {},
+      to: `/leanCard/${this.id}`,
     };
   },
   mounted() {
@@ -126,6 +131,9 @@ export default {
             this.$store.dispatch("cardPool/addItemInArrAct", value);
             this.arr = data.message;
             this.number = data.message.length == 0 ? -1 : data.message.length;
+            let quizArr = quiz.randomQuiz(data.message);
+            this.$store.dispatch("quiz/assginQuizAct", quizArr);
+             console.log(quizArr , 'qizzzzzzzztreeeeeeeeeee')
             cardService
               .getInforCardFolder(this.id)
               .then((data) => {
@@ -140,7 +148,11 @@ export default {
             console.log(err);
           });
       } else {
+        //create quiz store
         this.arr = this.$store.state.cardPool.showCardPool.arrPool;
+        let quizArr = quiz.randomQuiz(this.arr);
+        this.$store.dispatch("quiz/assginQuizAct", quizArr);
+        console.log(quizArr , 'qizzzzzzzz')
         this.number =
           this.$store.state.cardPool.showCardPool.arrPool.length == 0
             ? -1
