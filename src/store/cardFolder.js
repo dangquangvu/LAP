@@ -8,7 +8,7 @@ export const cardFolder = {
         arrShow: [{
             author_id: "",
         }, ],
-        folderFocus: {}
+        folderFocus: null
     },
 
     actions: {

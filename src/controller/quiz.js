@@ -10,7 +10,6 @@ class Quiz {
                 API_URL + `generateQuiz/${id}`, { headers: { "Content-Type": "application/json" } }
             )
             .then((response) => {
-                console.log(response.data, `generateQuiz/${id}`)
                 return response.data;
             })
             .catch((err) => {

@@ -1,19 +1,22 @@
 <template>
   <v-container fluid>
-    <v-row>
+    <template v-if="quizz">
+      <v-row>
       <v-col cols="12" sm="3" md="3" lg="2" class="offset-md-1 offset-lg-1">
         <navLearn></navLearn>
       </v-col>
-      <v-col cols="12" sm="9" md="7" lg="6">
-        <quizLearn></quizLearn>
+      <v-col cols="12" sm="9" md="7" lg="6" >
+        <!-- <template v-if="quiz"> -->
+          <quizCard :quizAns="quizz"></quizCard>
+        <!-- </template> -->
       </v-col>
-    </v-row>
+    </v-row></template>  
   </v-container>
 </template>
 
 <script>
 import navLearn from "../components/leanCard/navLearnDetail";
-import quizLearn from "../components/leanCard/quizCard";
+import quizCard from "../components/leanCard/quizCard";
 import quiz from "../controller/quiz";
 // import cardService from "../controller/cardService";
 export default {
@@ -24,8 +27,8 @@ export default {
         remember: 1,
         forget: 9,
         id: null,
-        quiz: null,
       },
+      quizz: null,
     };
   },
   mounted() {
@@ -33,38 +36,42 @@ export default {
     this.generateQuiz();
   },
   methods: {
-    async generateQuiz() {
-      if (
-        !this.$store.state.quiz.quiz &&
-        this.$store.state.cardPool.showCardPool
-      ) {
-        console.log( this.$store.state.cardPool.showCardPool.arrPool)
-        let data = quiz.randomQuiz(
-          this.$store.state.cardPool.showCardPool.arrPool
-        );
-        this.$store.dispatch("quiz/assginQuizAct", data);
-        this.quiz = data;
-        console.log("aaaa", data);
-      } else if (
-        !this.$store.state.quiz.quiz &&
-        !this.$store.state.showCardPool
-      ) {
-        console.log(this.id ,'iddddddddd')
-        quiz.generationQuiz(this.id).then((data) => {
-          console.log(data.message);
-          this.$store.dispatch("quiz/assginQuizAct", data.message);
-          this.quiz = data.message;
-          console.log(this.quiz,'xxxxxxx');
-        });
-      } else if (this.$store.state.quiz.quiz) {
-        this.quiz = this.$store.state.quiz.quiz;
-        console.log(this.quiz);
+    generateQuiz() {
+      if (!this.$store.state.quiz.quiz) {
+        let check = this.isEmpty(this.$store.state.cardPool.showCardPool);
+        if (!check) {
+          let data = quiz.randomQuiz(
+            this.$store.state.cardPool.showCardPool.arrPool
+          );
+          this.$store.dispatch("quiz/assginQuizAct", data);
+          this.quizz = data;
+          // console.log("aaaa", this.quizz);
+        }
+        if (check) {
+          console.log(this.id, "iddddddddd");
+          quiz.generationQuiz(this.id).then((data) => {
+            // console.log(data.message);
+            this.$store.dispatch("quiz/assginQuizAct", data.message);
+            this.quizz = data.message;
+            // console.log(this.quizz, "xxxxxxx");
+          });
+        }
       }
+      else {
+        this.quizz = this.$store.state.quiz.quiz;
+        // console.log(this.quizz,"eelllllsssseeee");
+      }
+    },
+    isEmpty(obj) {
+      for (var key in obj) {
+        if (obj.prototype.hasOwnProperty.call(key)) return false;
+      }
+      return true;
     },
   },
   components: {
     navLearn,
-    quizLearn,
+    quizCard,
   },
 };
 </script>
@@ -106,9 +113,3 @@ export default {
   font-weight: 700;
 }
 </style>
-//
-<v-row style="justify:center">
-          <v-col xs="12" sm="8" md="8" lg="6" cols="12">
-              
-          </v-col>
-        </v-row>

@@ -1,13 +1,13 @@
 <template>
-  <v-card class="quiz--zone" outlined>
+  <v-card class="quiz--zone" outlined  >
     <template v-if="number && number <= length">
       <v-card-text class="quiz--text--zone">
-        <span v-html="quiz[number - 1].text" class="text--show"></span>
+        <span v-html="quiz[number - 1].item.text" class="text--show"></span>
       </v-card-text>
       <v-card-text>
         <v-row>
           <v-col
-            v-for="(n, i) in quiz[number - 1].ans"
+            v-for="(n, i) in quiz[number - 1].arrAns"
             :key="i"
             cols="12"
             sm="6"
@@ -16,14 +16,14 @@
           >
             <div
               class="tick"
-              @click="sendQues(i, quiz[number - 1], n)"
+              @click="sendQues(i, quiz[number - 1].item.explain, n)"
               role="button"
               :class="{
                 'tick--true': choose == i,
                 'tick--false': choose_false == i,
               }"
             >
-              {{ n.text }}
+              {{ n }}
             </div>
           </v-col>
         </v-row>
@@ -49,20 +49,10 @@
 <script>
 import Quiz from "../../controller/quiz";
 export default {
+  props: ["quizAns"],
   data() {
     return {
-      quiz: [
-        {
-          text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-          ans: [{ text: "a" }, { text: "b" }, { text: "c" }, { text: "d" }],
-          ques: { text: "b" },
-        },
-        {
-          text: "How can I make an element sticky using Vuetify?",
-          ans: [{ text: "a" }, { text: "b" }, { text: "c" }, { text: "d" }],
-          ques: { text: "b" },
-        },
-      ],
+      quiz: null,
       number: null,
       length: null,
       html: "",
@@ -71,8 +61,13 @@ export default {
     };
   },
   mounted() {
-    this.contruct();
-    this.generationQuiz();
+    console.log(this.quizAns, "start")
+    if (this.quizAns) {
+      this.quiz = this.quizAns;
+      console.log()
+      this.contruct();
+      console.log(this.number)
+    }
   },
   methods: {
     contruct() {
@@ -81,12 +76,13 @@ export default {
       console.log(this.number, this.length);
     },
     sendQues(id, arr, value) {
-      // console.log(id, value , arr);
-      let choose = value.text;
-      let ques = arr.ques.text;
-      let result = arr.ans.filter((item) => item.text == ques);
-      if (result[0].text === choose) {
-        console.log(ques, result[0].text);
+      // sendQues(i, quiz[number - 1].item.explain, n)
+      console.log(id, value , arr);
+      let choose = value;
+      let ques = arr;
+      // let result = arr.ans.filter((item) => item.text == ques);
+      if (ques === choose) {
+        console.log(ques,choose);
         this.choose = id;
         setTimeout(
           function() {
@@ -116,6 +112,7 @@ export default {
       Quiz.generationQuiz()
         .then((data) => {
           console.log(data);
+          this.quiz = data;
         })
         .catch((err) => {
           console.log(err);
@@ -163,3 +160,7 @@ export default {
   border: 0.125rem solid #ff725b;
 }
 </style>
+// [ { text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.", ans:
+[{ text: "a" }, { text: "b" }, { text: "c" }, { text: "d" }], ques: { text: "b"
+}, }, { text: "How can I make an element sticky using Vuetify?", ans: [{ text:
+"a" }, { text: "b" }, { text: "c" }, { text: "d" }], ques: { text: "b" }, }, ]

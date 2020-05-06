@@ -21,7 +21,6 @@ export default {
       },
     };
   },
-  mounted() {},
   methods: {
     async getData() {
       if (!this.$store.state.cardPool.showCardPool.idFolder) {
@@ -35,14 +34,14 @@ export default {
             this.$store.commit("cardPool/setShow", value);
             this.$store.dispatch("cardPool/addItemInArrAct", value);
             this.arr = data.message;
-            console.log(this.arr);
+            // console.log(this.arr);
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
         this.arr = this.$store.state.cardPool.showCardPool.arrPool;
-        console.log(this.arr.arrPool);
+        // console.log(this.arr.arrPool);
       }
     },
   },
