@@ -2,15 +2,21 @@
   <v-container fluid>
     <template v-if="quizz">
       <v-row>
-      <v-col cols="12" sm="3" md="3" lg="2" class="offset-md-1 offset-lg-1">
-        <navLearn></navLearn>
-      </v-col>
-      <v-col cols="12" sm="9" md="7" lg="6" >
-        <!-- <template v-if="quiz"> -->
-          <quizCard :quizAns="quizz"></quizCard>
-        <!-- </template> -->
-      </v-col>
-    </v-row></template>  
+        <v-col cols="12" sm="3" md="3" lg="2" class="offset-md-1 offset-lg-1">
+          <navLearn :counter="counter"></navLearn>
+        </v-col>
+        <v-col cols="12" sm="9" md="7" lg="6">
+          <!-- <template v-if="quiz"> -->
+          <quizCard
+            :quizAns="quizz"
+            @changeCouterTrueChild="changeCouterTrue"
+            @changeCouterFalseChild="changeCouterfalse"
+            @reset = "reset"
+          ></quizCard>
+          <!-- </template> -->
+        </v-col>
+      </v-row></template
+    >
   </v-container>
 </template>
 
@@ -24,8 +30,8 @@ export default {
     return {
       counter: {
         total: 10,
-        remember: 1,
-        forget: 9,
+        remember: 0,
+        forget: 0,
         id: null,
       },
       quizz: null,
@@ -45,21 +51,18 @@ export default {
           );
           this.$store.dispatch("quiz/assginQuizAct", data);
           this.quizz = data;
-          // console.log("aaaa", this.quizz);
+          this.counter.total = this.quizz.length;
         }
         if (check) {
-          console.log(this.id, "iddddddddd");
           quiz.generationQuiz(this.id).then((data) => {
-            // console.log(data.message);
             this.$store.dispatch("quiz/assginQuizAct", data.message);
             this.quizz = data.message;
-            // console.log(this.quizz, "xxxxxxx");
+            this.counter.total = this.quizz.length;
           });
         }
-      }
-      else {
+      } else {
         this.quizz = this.$store.state.quiz.quiz;
-        // console.log(this.quizz,"eelllllsssseeee");
+        this.counter.total = this.quizz.length;
       }
     },
     isEmpty(obj) {
@@ -68,6 +71,23 @@ export default {
       }
       return true;
     },
+    changeCouterTrue() {
+      this.counter.remember += 1;
+      this.counter.total -= 1;
+      console.log("correct");
+      return;
+    },
+    changeCouterfalse() {
+      this.counter.forget += 1;
+      this.counter.total -= 1;
+      console.log("incorrect");
+      return;
+    },
+    reset(){
+      this.counter.total = this.quizz.length;
+      this.counter.forget = 0;
+      this.counter.remember = 0;
+    }
   },
   components: {
     navLearn,

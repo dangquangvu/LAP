@@ -54,7 +54,7 @@
             <v-list-item-title
               class="subtext--show text--remember"
               twoLine
-              v-html="`Đã thuộc`"
+              v-html="`đúng`"
             ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -72,13 +72,13 @@
         <v-list-item disabled class="show">
           <v-list-item-content>
             <v-list-item-subtitle
-              class="number--show"  
+              class="number--show"
               v-html="counter.forget"
             ></v-list-item-subtitle>
             <v-list-item-title
               class="subtext--show text--forget"
               twoLine
-              v-html="`Chưa thuộc`"
+              v-html="`sai`"
             ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -93,14 +93,16 @@
 
 <script>
 export default {
+  props: ["counter"],
   data() {
-    return {
-      counter: {
-        total: 10,
-        remember: 1,
-        forget: 9,
-      },
-    };
+    return {};
+  },
+  watch: {
+    counter(newVal, oldVal) {
+      if(newVal != oldVal){
+        return newVal;
+      }
+    },
   },
 };
 </script>

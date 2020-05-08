@@ -1,5 +1,5 @@
 <template>
-  <v-card class="quiz--zone" outlined  >
+  <v-card class="quiz--zone" outlined style="overflow-y: scroll;height: 40px">
     <template v-if="number && number <= length">
       <v-card-text class="quiz--text--zone">
         <span v-html="quiz[number - 1].item.text" class="text--show"></span>
@@ -16,7 +16,9 @@
           >
             <div
               class="tick"
-              @click="sendQues(i, quiz[number - 1].item.explain, n)"
+              @click="
+                sendQues(i, quiz[number - 1].item.explain, n, quiz[number - 1])
+              "
               role="button"
               :class="{
                 'tick--true': choose == i,
@@ -30,14 +32,28 @@
       </v-card-text>
     </template>
     <template v-else-if="number > length">
-      <v-card-text class="quiz--text--zone">
-        <span>Quá Được</span>
+      <v-card-text class="" style="text-align: center;">
+        <span class="text--show" style="color : #155724;font-weight: 900;"
+          >Kết quả</span
+        >
       </v-card-text>
       <v-card-text>
+          <v-card-title>Đúng</v-card-title>
         <v-row>
-          <v-col cols="12" sm="6" md="3" lg="3">
-            <div>
-              <button @click="returnLearn()">return</button>
+          <v-col cols="12" v-for="(n,i) in correct" :key="i">
+            <cardShowResult :card="n"></cardShowResult>
+          </v-col>
+        </v-row>
+          <v-card-title>Sai</v-card-title>
+        <v-row>
+          <v-col cols="12" v-for="(n,i) in incorrect" :key="i">
+            <cardShowResult :card="n"></cardShowResult>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <div class="text--show" style="text-align: center;">
+              <button @click="returnLearn()">Học lại</button>
             </div>
           </v-col>
         </v-row>
@@ -48,8 +64,12 @@
 
 <script>
 import Quiz from "../../controller/quiz";
+import cardShowResult from "../ContentFolder/card/card_show_result";
 export default {
   props: ["quizAns"],
+  components: {
+    cardShowResult,
+  },
   data() {
     return {
       quiz: null,
@@ -58,32 +78,36 @@ export default {
       html: "",
       choose: null,
       choose_false: null,
+      incorrect: [],
+      correct: [],
     };
   },
   mounted() {
-    console.log(this.quizAns, "start")
     if (this.quizAns) {
       this.quiz = this.quizAns;
-      console.log()
       this.contruct();
-      console.log(this.number)
     }
   },
   methods: {
     contruct() {
       this.number = 1;
       this.length = this.quiz.length;
-      console.log(this.number, this.length);
     },
-    sendQues(id, arr, value) {
-      // sendQues(i, quiz[number - 1].item.explain, n)
-      console.log(id, value , arr);
+    sendQues(id, explain, value, arr) {
       let choose = value;
-      let ques = arr;
-      // let result = arr.ans.filter((item) => item.text == ques);
+      let ques = explain;
+      let text = arr.item.text;
+      let object = {
+        text: text,
+        explain: explain,
+        choose: value,
+        arr: arr,
+      };
       if (ques === choose) {
-        console.log(ques,choose);
         this.choose = id;
+        this.$emit("changeCouterTrueChild");
+        this.correct.push(object);
+        this.$store.commit("quiz/correct", object);
         setTimeout(
           function() {
             this.number = this.number + 1;
@@ -93,6 +117,9 @@ export default {
         );
       } else {
         this.choose_false = id;
+        this.$store.commit("quiz/incorrect", object);
+        this.incorrect.push(object);
+        this.$emit("changeCouterFalseChild");
         setTimeout(
           function() {
             this.number = this.number + 1;
@@ -107,11 +134,13 @@ export default {
     },
     returnLearn() {
       this.number = 1;
+      this.correct =[];
+      this.incorrect = [];
+      this.$emit("reset");
     },
     generationQuiz() {
       Quiz.generationQuiz()
         .then((data) => {
-          console.log(data);
           this.quiz = data;
         })
         .catch((err) => {
