@@ -4,7 +4,7 @@
       <v-card-text class="quiz--text--zone">
         <span v-html="quiz[number - 1].item.text" class="text--show"></span>
       </v-card-text>
-      <v-card-text>
+      <v-card-text style="padding-bottom: 0;">
         <v-row>
           <v-col
             v-for="(n, i) in quiz[number - 1].arrAns"
@@ -30,6 +30,14 @@
           </v-col>
         </v-row>
       </v-card-text>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" class="d-flex justify-space-between" style="padding-bottom:0px">
+            <ion-icon name="arrow-back-outline" style="cursor: pointer;" @click="prev()"></ion-icon>
+            <ion-icon name="arrow-forward-outline" style="cursor: pointer;" @click="next()"></ion-icon>
+          </v-col>
+        </v-row>
+      </v-card-text>
     </template>
     <template v-else-if="number > length">
       <v-card-text class="" style="text-align: center;">
@@ -38,15 +46,15 @@
         >
       </v-card-text>
       <v-card-text>
-          <v-card-title>Đúng</v-card-title>
+        <v-card-title>Đúng</v-card-title>
         <v-row>
-          <v-col cols="12" v-for="(n,i) in correct" :key="i">
+          <v-col cols="12" v-for="(n, i) in correct" :key="i">
             <cardShowResult :card="n"></cardShowResult>
           </v-col>
         </v-row>
-          <v-card-title>Sai</v-card-title>
+        <v-card-title>Sai</v-card-title>
         <v-row>
-          <v-col cols="12" v-for="(n,i) in incorrect" :key="i">
+          <v-col cols="12" v-for="(n, i) in incorrect" :key="i">
             <cardShowResult :card="n"></cardShowResult>
           </v-col>
         </v-row>
@@ -64,14 +72,15 @@
 
 <script>
 import cardShowResult from "../ContentFolder/card/card_show_result";
+// import Quiz from "../../controller/quiz";
 export default {
-  props: ["quizAns"],
+  props: ["quiz"],
   components: {
     cardShowResult,
   },
   data() {
     return {
-      quiz: null,
+      // quiz: null,
       number: null,
       length: null,
       html: "",
@@ -79,11 +88,11 @@ export default {
       choose_false: null,
       incorrect: [],
       correct: [],
+      quizAns: [],
     };
   },
   mounted() {
-    if (this.quizAns) {
-      this.quiz = this.quizAns;
+    if (this.quiz) {
       this.contruct();
     }
   },
@@ -106,36 +115,27 @@ export default {
         this.choose = id;
         this.$emit("changeCouterTrueChild");
         this.correct.push(object);
-        this.$store.commit("quiz/correct", object);
-        setTimeout(
-          function() {
-            this.number = this.number + 1;
-            this.choose = null;
-          }.bind(this),
-          500
-        );
       } else {
         this.choose_false = id;
-        this.$store.commit("quiz/incorrect", object);
         this.incorrect.push(object);
         this.$emit("changeCouterFalseChild");
-        setTimeout(
-          function() {
-            this.number = this.number + 1;
-            this.choose_false = null;
-          }.bind(this),
-          500
-        );
       }
-    },
-    changeNumber() {
-      this.number = this.number + 1;
     },
     returnLearn() {
       this.number = 1;
-      this.correct =[];
+      this.correct = [];
       this.incorrect = [];
       this.$emit("reset");
+    },
+    prev(){
+      if(this.number> 1){
+        this.number = this.number - 1;
+      }
+    },
+    next(){
+      if(this.number<=this.length-1){
+        this.number = this.number + 1;
+      }
     }
   },
 };
@@ -179,7 +179,3 @@ export default {
   border: 0.125rem solid #ff725b;
 }
 </style>
-// [ { text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.", ans:
-[{ text: "a" }, { text: "b" }, { text: "c" }, { text: "d" }], ques: { text: "b"
-}, }, { text: "How can I make an element sticky using Vuetify?", ans: [{ text:
-"a" }, { text: "b" }, { text: "c" }, { text: "d" }], ques: { text: "b" }, }, ]

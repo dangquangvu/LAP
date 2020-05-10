@@ -60,7 +60,13 @@
                 ></ion-icon>
                 Thẻ ghi nhớ</v-col
               >
-              <v-col xs="12" sm="12" cols="12" class="pl-8" @click="learnRouter()">
+              <v-col
+                xs="12"
+                sm="12"
+                cols="12"
+                class="pl-8"
+                @click="learnRouter()"
+              >
                 <ion-icon
                   name="book-outline"
                   style="font-size: 25px;color: #4257b2;fill: #4257b2;"
@@ -69,7 +75,13 @@
                 Học
               </v-col>
 
-              <v-col xs="12" sm="12" cols="12" class="pl-8">
+              <v-col
+                xs="12"
+                sm="12"
+                cols="12"
+                class="pl-8"
+                @click.stop="dialog = true"
+              >
                 <ion-icon
                   name="document-text-outline"
                   style="font-size: 25px;color: #4257b2;
@@ -78,6 +90,51 @@
                 ></ion-icon
                 ><span class="mb-12 text--grey">Kiểm tra</span></v-col
               >
+
+              <v-dialog v-model="dialog" max-width="290">
+                <v-card min-height="400px">
+                  <v-card-title class="d-flex mx-auto text-center"
+                    >Tùy Chọn</v-card-title
+                  >
+                  <v-divider></v-divider>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-card-subtitle>
+                      Loại Câu Hỏi
+                    </v-card-subtitle>
+                    <v-card-text>
+                      <v-radio-group v-model="dialogm1" column>
+                        <v-radio label="Chọn thẻ" value="choose_card"></v-radio>
+                      </v-radio-group>
+                    </v-card-text>
+                    <!-- ===================== -->
+                    <v-card-subtitle>
+                      Thời gian
+                    </v-card-subtitle>
+                    <v-col class="d-flex mx-auto" cols="10">
+                      <v-select
+                        :items="items"
+                        label="phút"
+                        dense
+                        v-model="select"
+                        :rules="[(v) => !!v || 'Chọn thời gian kiểm tra']"
+                        required
+                      ></v-select>
+                    </v-col>
+                  </v-form>
+                  <v-col class="d-flex mx-auto" cols="10">
+                    <v-card-actions
+                      class="mx-auto text-center justify-space-between"
+                    >
+                      <v-btn color="blue darken-1" text @click="dialog = false"
+                        >Close</v-btn
+                      >
+                      <v-btn color="blue darken-1" text @click="createTest()"
+                        >Save</v-btn
+                      >
+                    </v-card-actions>
+                  </v-col>
+                </v-card>
+              </v-dialog>
             </v-row>
           </v-col>
         </v-row>
@@ -100,6 +157,7 @@ import quiz from "../controller/quiz";
 export default {
   data() {
     return {
+      valid: true,
       value: true,
       id: this.$route.params.id,
       arr: [],
@@ -110,6 +168,10 @@ export default {
       },
       admin: null,
       to: `/leanCard/${this.id}`,
+      dialogm1: "choose_card",
+      dialog: false,
+      items: [5, 10, 15, 20, 25, 30, 45, 50, 55, 60, 60, 80, 90, 120, 160],
+      select: null,
     };
   },
   mounted() {
@@ -130,7 +192,7 @@ export default {
             this.$store.commit("cardPool/setShow", value);
             this.$store.dispatch("cardPool/addItemInArrAct", value);
             this.arr = data.message;
-            console.log(this.arr)
+            console.log(this.arr);
             this.number = data.message.length == 0 ? -1 : data.message.length;
             let quizArr = quiz.randomQuiz(data.message);
             this.$store.dispatch("quiz/assginQuizAct", quizArr);
@@ -151,7 +213,7 @@ export default {
       } else {
         //create quiz store
         this.arr = this.$store.state.cardPool.showCardPool.arrPool;
-        console.log(this.arr)
+        console.log(this.arr);
         let quizArr = quiz.randomQuiz(this.arr);
         this.$store.dispatch("quiz/assginQuizAct", quizArr);
         // console.log(quizArr, "qizzzzzzzz");
@@ -173,9 +235,16 @@ export default {
         }
       }
     },
-    learnRouter(){
+    learnRouter() {
       this.$router.push(`/leanCard/${this.id}`);
-    }
+    },
+    createTest() {
+      // console.log()
+      if (this.$refs.form.validate()) {
+        this.dialog = false;
+        console.log(this.select);
+      }
+    },
   },
   components: { cardInfor, flashCard, carousel },
 };

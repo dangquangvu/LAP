@@ -9,6 +9,7 @@ import CreateCard from "../components/CreateCard";
 import RegisterPage from "../views/register.vue";
 import CardId from "../views/CardId.vue"
 import leanCard from "../views/leanCard"
+import testCard from "../views/test.vue"
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,10 @@ export const router = new VueRouter({
         {
             path: "/leanCard/:id?",
             component: leanCard,
+        },
+        {
+            path: "/test/:id?",
+            component: testCard,
         },
         {
             path: "/home",

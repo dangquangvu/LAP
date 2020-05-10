@@ -6,7 +6,7 @@
       color="#4257b2"
       dark
     >
-     <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-icon name="arrow-back-outline"></ion-icon>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">LAP</span>
       </v-toolbar-title>
@@ -30,27 +30,25 @@
         /></v-avatar>
       </v-btn>
     </v-app-bar>
-    
-    <v-content class="grey  lighten-5" >
-      <learnCardDetail></learnCardDetail>
+
+    <v-content class="grey  lighten-5">
+      <testCardDetail></testCardDetail>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import learnCardDetail from '../components/learnCardDetail'
+import testCardDetail from "../components/testCardDetail";
 export default {
-    data(){
-        return {
-            drawer : null,
-        }
-    },components:{
-        learnCardDetail
-    }
-}
-
+  data() {
+    return {
+      drawer: null,
+    };
+  },
+  components: {
+    testCardDetail,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
