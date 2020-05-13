@@ -7,6 +7,7 @@ import { cardFolder } from "./cardFolder";
 import { cardPool } from "./cardPool";
 import { quiz } from "./quiz";
 import { test } from "./test";
+import * as Cookies from 'js-cookie'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -16,11 +17,16 @@ export default new Vuex.Store({
         cardFolder,
         cardPool,
         quiz,
-        test,
+        test: test,
     },
     plugins: [
         createPersistedState({
             paths: ['test'],
+            storage: {
+                getState: (key) => Cookies.getJSON(key),
+                setItem: (key, value) => Cookies.set(key, value, { expires: new Date(new Date().getTime() + 1 * 60 * 1000), secure: true }),
+                removeItem: key => Cookies.remove(key),
+            },
         }),
     ],
 });

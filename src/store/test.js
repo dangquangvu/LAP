@@ -6,6 +6,14 @@ export const test = {
         correctAnswer: [],
         incorrectAnswer: [],
     },
-    actions: {},
-    mutations: {},
+    actions: {
+        setQuizAct({ commit }, value) {
+            commit('setQuiz', value);
+        }
+    },
+    mutations: {
+        setQuiz(state, value) {
+            state.quiz = value;
+        }
+    },
 };

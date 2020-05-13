@@ -2,9 +2,11 @@
   <v-card class="quiz--zone" outlined style="overflow-y: scroll;height: 40px">
     <template v-if="number && number <= length">
       <v-card-text class="quiz--text--zone">
-        <span v-html="quiz[number - 1].item.text" class="text--show"></span>
+        <span v-html="quiz[number - 1].item.text" class="text--show">
+          {{ forcus }}</span
+        >
       </v-card-text>
-      <v-card-text style="padding-bottom: 0;">
+      <v-card-text style="padding-bottom: 0px;">
         <v-row>
           <v-col
             v-for="(n, i) in quiz[number - 1].arrAns"
@@ -17,12 +19,17 @@
             <div
               class="tick"
               @click="
-                sendQues(i, quiz[number - 1].item.explain, n, quiz[number - 1])
+                sendQues(
+                  i,
+                  quiz[number - 1].item.explain,
+                  n,
+                  quiz[number - 1],
+                  number - 1
+                )
               "
               role="button"
               :class="{
-                'tick--true': choose == i,
-                'tick--false': choose_false == i,
+                'tick--choose': quizAns[number - 1].id_choose == i,
               }"
             >
               {{ n }}
@@ -32,9 +39,21 @@
       </v-card-text>
       <v-card-text>
         <v-row>
-          <v-col cols="12" class="d-flex justify-space-between" style="padding-bottom:0px">
-            <ion-icon name="arrow-back-outline" style="cursor: pointer;" @click="prev()"></ion-icon>
-            <ion-icon name="arrow-forward-outline" style="cursor: pointer;" @click="next()"></ion-icon>
+          <v-col
+            cols="12"
+            class="d-flex justify-space-between"
+            style="padding-bottom:0px"
+          >
+            <ion-icon
+              name="arrow-back-outline"
+              style="cursor: pointer;"
+              @click="prev()"
+            ></ion-icon>
+            <ion-icon
+              name="arrow-forward-outline"
+              style="cursor: pointer;"
+              @click="next()"
+            ></ion-icon>
           </v-col>
         </v-row>
       </v-card-text>
@@ -74,7 +93,7 @@
 import cardShowResult from "../ContentFolder/card/card_show_result";
 // import Quiz from "../../controller/quiz";
 export default {
-  props: ["quiz"],
+  props: ["quiz", "forcus", "quizBackbone"],
   components: {
     cardShowResult,
   },
@@ -96,12 +115,30 @@ export default {
       this.contruct();
     }
   },
+  watch: {
+    forcus() {
+      if (this.forcus != null) {
+        this.number = this.forcus;
+      }
+    },
+    quizBackbone(oldval, newval) {
+      if (oldval != newval) {
+        this.quizAns = this.quizBackbone;
+      }
+    },
+  },
   methods: {
     contruct() {
       this.number = 1;
       this.length = this.quiz.length;
+      this.quizAns = this.quizBackbone;
+      // console.log(this.quizAns);
+      this.$store.dispatch("test/setQuizAct", this.quizAns);
+      //sau này thêm id của bài kiểm tra, định vị bài kiểm tra trong localstorage
+      // localStorage.setItem('test',this.quizAns);
     },
-    sendQues(id, explain, value, arr) {
+    sendQues(id, explain, value, arr, index_tick) {
+      // console.log(id, explain, value, arr);
       let choose = value;
       let ques = explain;
       let text = arr.item.text;
@@ -111,6 +148,12 @@ export default {
         choose: value,
         arr: arr,
       };
+      console.log(index_tick);
+      // this.quizAns[index_tick].tick = value;
+      // this.quizAns[index_tick].id_choose = id;
+      // localStorage.setItem('test',this.quizAns);
+      this.$emit("sendQues", { value: value, id: id, index_tick: index_tick });
+      this.$store.dispatch("test/setQuizAct", this.quizAns);
       if (ques === choose) {
         this.choose = id;
         this.$emit("changeCouterTrueChild");
@@ -127,16 +170,16 @@ export default {
       this.incorrect = [];
       this.$emit("reset");
     },
-    prev(){
-      if(this.number> 1){
+    prev() {
+      if (this.number > 1) {
         this.number = this.number - 1;
       }
     },
-    next(){
-      if(this.number<=this.length-1){
+    next() {
+      if (this.number <= this.length - 1) {
         this.number = this.number + 1;
       }
-    }
+    },
   },
 };
 </script>
@@ -170,12 +213,10 @@ export default {
 .tick:hover {
   border: 0.125rem solid #ffcd1f;
 }
-.tick--true {
-  background-color: #3ccfcf;
-  border: 0.125rem solid #3ccfcf;
-}
-.tick--false {
-  background-color: #ff725b;
-  border: 0.125rem solid #ff725b;
+
+.tick--choose {
+  background-color: #00acc1;
+  border: 0.125rem solid #1e41d6;
+  color: aliceblue;
 }
 </style>

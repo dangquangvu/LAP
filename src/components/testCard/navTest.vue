@@ -34,18 +34,19 @@
             width="100vw"
           >
             <v-card
-              v-for="(item, index) in length"
+              v-for="(item, index) in quizz"
               :key="index"
-              class="pa-3 m1 px-0 color"
+              class="pa-3 m1 px-0 "
               outlined
               tile
               max-width="165px"
               min-width="50px"
               min-height="55px"
               style="cursor: pointer"
-              @click="questionFocus(item)"
+              @click="questionFocus(item.id_parent+1)"
+              :class="{'color' : quizz[index].id_choose != null }"
             >
-              {{ item }}
+              {{ index + 1 }}
             </v-card>
           </v-card>
         </v-col>
@@ -90,11 +91,11 @@
 
 <script>
 export default {
-  props: [""],
+  props: ["length","quizBackbone"],
   data() {
     return {
       quizz: null,
-      length: 10,
+      // length: 10,
       time: "",
       last_score : 10
     };
@@ -120,13 +121,22 @@ export default {
       }, 1000);
     },
     questionFocus(value){
+        this.$emit("changeForcus", value);
         console.log(value)
-    }
+    },
+
   },
   mounted() {
     this.timer();
+    this.quizz = this.quizBackbone
   },
-  watch: {},
+  watch: {
+    quizBackbone(oldVal,newVal){
+      if(oldVal != newVal){
+        this.quizz = this.quizBackbone
+      }
+    }
+  },
 };
 </script>
 
@@ -186,6 +196,6 @@ export default {
   padding: 5px !important;
 }
 .color{
-    background-color: #23b26d!important;
+    background-color: #a8d2f3!important;
 }
 </style>

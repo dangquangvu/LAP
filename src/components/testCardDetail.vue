@@ -3,10 +3,19 @@
     <template>
       <v-row>
         <v-col cols="12" sm="3" md="3" lg="2" class="offset-md-1 offset-lg-1">
-          <navTest :length="length"></navTest>
+          <navTest
+            :length="length"
+            @changeForcus="changeForcus($event)"
+            :quizBackbone="quizBackbone"
+          ></navTest>
         </v-col>
         <v-col cols="12" sm="9" md="7" lg="6">
-          <mainTest :quiz="quiz"></mainTest>
+          <mainTest
+            :quiz="quiz"
+            :forcus="forcus"
+            :quizBackbone="quizBackbone"
+            @sendQues="sendQues($event)"
+          ></mainTest>
         </v-col>
       </v-row>
     </template>
@@ -171,13 +180,34 @@ export default {
           arrAns: ["q", "k", "h", "o"],
         },
       ],
-      length : null
+      length: null,
+      forcus: null,
+      quizBackbone: null,
     };
   },
   mounted() {
     this.length = this.quiz.length;
+    let arr = [];
+    for (let i = 0; i < this.length; i++) {
+      let object = {
+        id_parent: i,
+        id_choose: null,
+        tick: null,
+      };
+      arr.push(object);
+    }
+    this.quizBackbone = arr;
   },
-  methods: {},
+  methods: {
+    changeForcus(value) {
+      this.forcus = value;
+    },
+    sendQues(value){
+      console.log(value)
+      this.quizBackbone[value.index_tick].id_choose = value.id;
+      this.quizBackbone[value.index_tick].tick = value.value;
+    }
+  },
   components: {
     navTest,
     mainTest,
