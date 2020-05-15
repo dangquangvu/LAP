@@ -17,7 +17,6 @@ class Quiz {
             });
     }
     randomQuiz(data) {
-        console.log(data)
         let max = data.length - 1;
         let min = 0;
         let arrRandom = [];

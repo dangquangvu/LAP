@@ -154,6 +154,7 @@ import cardInfor from "../components/ContentFolder/card/cardInfor";
 import cardService from "../controller/cardService";
 import flashCard from "../components/leanCard/flashcard";
 import quiz from "../controller/quiz";
+import test from "../controller/test";
 export default {
   data() {
     return {
@@ -172,12 +173,14 @@ export default {
       dialog: false,
       items: [5, 10, 15, 20, 25, 30, 45, 50, 55, 60, 60, 80, 90, 120, 160],
       select: null,
+      user: null,
     };
   },
   mounted() {
     this.getData();
     this.id = this.$route.params.id;
-    console.log(this.id);
+    // console.log(this.id);
+    this.user = JSON.parse(localStorage.getItem("user"));
   },
   methods: {
     getData() {
@@ -192,7 +195,7 @@ export default {
             this.$store.commit("cardPool/setShow", value);
             this.$store.dispatch("cardPool/addItemInArrAct", value);
             this.arr = data.message;
-            console.log(this.arr);
+            // console.log(this.arr);
             this.number = data.message.length == 0 ? -1 : data.message.length;
             let quizArr = quiz.randomQuiz(data.message);
             this.$store.dispatch("quiz/assginQuizAct", quizArr);
@@ -200,7 +203,7 @@ export default {
             cardService
               .getInforCardFolder(this.id)
               .then((data) => {
-                // console.log(data);
+                console.log(data);
                 this.admin = data.message[0];
               })
               .catch((err) => {
@@ -213,7 +216,7 @@ export default {
       } else {
         //create quiz store
         this.arr = this.$store.state.cardPool.showCardPool.arrPool;
-        console.log(this.arr);
+        // console.log(this.arr);
         let quizArr = quiz.randomQuiz(this.arr);
         this.$store.dispatch("quiz/assginQuizAct", quizArr);
         // console.log(quizArr, "qizzzzzzzz");
@@ -239,10 +242,27 @@ export default {
       this.$router.push(`/leanCard/${this.id}`);
     },
     createTest() {
-      // console.log()
       if (this.$refs.form.validate()) {
         this.dialog = false;
-        console.log(this.select);
+        // console.log(this.select, this.user.user,test);
+        let body = {
+          authorId: this.admin.author_id,
+          author: this.admin.author,
+          guestTestId: this.user.user._id,
+          guestTest: this.user.user.fullname,
+          title: this.admin.title,
+          about_time: this.select,
+        };
+        console.log(body);
+        test
+          .generationTest(body, this.id)
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        this.$router.push(`/test/${this.id}`);
       }
     },
   },
