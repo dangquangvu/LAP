@@ -1,102 +1,30 @@
 <template>
   <v-card class="quiz--zone" outlined style="overflow-y: scroll;height: 40px">
-    <template v-if="number && number <= length">
-      <v-card-text class="quiz--text--zone">
-        <span v-html="quiz[number - 1].item.text" class="text--show">
-          {{ forcus }}</span
-        >
-      </v-card-text>
-      <v-card-text style="padding-bottom: 0px;">
-        <v-row>
-          <v-col
-            v-for="(n, i) in quiz[number - 1].arrAns"
-            :key="i"
-            cols="12"
-            sm="6"
-            md="3"
-            lg="3"
-          >
-            <div
-              class="tick"
-              @click="
-                sendQues(
-                  i,
-                  quiz[number - 1].item.explain,
-                  n,
-                  quiz[number - 1],
-                  number - 1
-                )
-              "
-              role="button"
-              :class="{
-                'tick--choose': quizAns[number - 1].id_choose == i,
-              }"
-            >
-              {{ n }}
-            </div>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <v-card-text>
-        <v-row>
-          <v-col
-            cols="12"
-            class="d-flex justify-space-between"
-            style="padding-bottom:0px"
-          >
-            <ion-icon
-              name="arrow-back-outline"
-              style="cursor: pointer;"
-              @click="prev()"
-            ></ion-icon>
-            <ion-icon
-              name="arrow-forward-outline"
-              style="cursor: pointer;"
-              @click="next()"
-            ></ion-icon>
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </template>
-    <template v-else-if="number > length">
-      <v-card-text class="" style="text-align: center;">
-        <span class="text--show" style="color : #155724;font-weight: 900;"
-          >Kết quả</span
-        >
-      </v-card-text>
-      <v-card-text>
-        <v-card-title>Đúng</v-card-title>
-        <v-row>
-          <v-col cols="12" v-for="(n, i) in correct" :key="i">
-            <cardShowResult :card="n"></cardShowResult>
-          </v-col>
-        </v-row>
-        <v-card-title>Sai</v-card-title>
-        <v-row>
-          <v-col cols="12" v-for="(n, i) in incorrect" :key="i">
-            <cardShowResult :card="n"></cardShowResult>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <div class="text--show" style="text-align: center;">
-              <button @click="returnLearn()">Học lại</button>
-            </div>
-          </v-col>
-        </v-row>
+    <template v-for="(item, index) in quiz">
+      <v-card-text class="quiz--text--zone" :key="index">
+        <span class="text--show">{{ index + 1 }}.{{ item.item.text }} </span>
+        <v-card-text style="padding-bottom: 0px;">
+          <v-row>
+            <v-radio-group v-model="radioGroup">
+              <v-radio
+                v-for="(n, i) in quiz[index].arrAns"
+                :key="i"
+                :label="`${n}`"
+                :value="n"
+              ></v-radio>
+            </v-radio-group>
+          </v-row>
+        </v-card-text>
       </v-card-text>
     </template>
   </v-card>
 </template>
 
 <script>
-import cardShowResult from "../ContentFolder/card/card_show_result";
 // import Quiz from "../../controller/quiz";
 export default {
   props: ["quiz", "forcus", "quizBackbone"],
-  components: {
-    cardShowResult,
-  },
+  components: {},
   data() {
     return {
       // quiz: null,
@@ -189,13 +117,14 @@ export default {
   min-height: 500px;
 }
 .quiz--text--zone {
-  min-height: 350px;
+  min-height: 150px;
 }
 .text--show {
-  font-size: 30px;
+  font-size: 25px;
   color: #455358;
   font-weight: 400;
   line-height: 1;
+  /* font-size: 1.1em; */
 }
 .tick {
   border: 0.125rem solid #3ccfcf;
