@@ -20,7 +20,7 @@
             <v-list-item-title class="text--show">Kiểm Tra</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-col
+        <!-- <v-col
           cols="12"
           style="overflow-y: scroll;"
           min-height="100px"
@@ -58,11 +58,8 @@
             tile
           >
             CountDown :{{ time }}
-            <!-- <v-card min-height="35px"
-            min-width="50px">
-            </v-card> -->
           </v-card>
-        </v-col>
+        </v-col> -->
         <v-col cols="12" style="" min-height="70px">
           <v-card
             class="d-flex flex-wrap text-center justify-center p2"
@@ -91,7 +88,7 @@
 
 <script>
 export default {
-  props: ["length","quizBackbone"],
+  props: ["length"],
   data() {
     return {
       quizz: null,
@@ -127,15 +124,11 @@ export default {
 
   },
   mounted() {
-    this.timer();
-    this.quizz = this.quizBackbone
+    // this.timer();
+   
   },
   watch: {
-    quizBackbone(oldVal,newVal){
-      if(oldVal != newVal){
-        this.quizz = this.quizBackbone
-      }
-    }
+    
   },
 };
 </script>

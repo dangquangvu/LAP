@@ -1,41 +1,52 @@
+/* eslint-disable */
 <template>
   <v-card class="quiz--zone" outlined style="overflow-y: scroll;height: 40px">
-    <template v-for="(item, index) in quiz">
-      <v-card-text class="quiz--text--zone" :key="index">
-        <span class="text--show">{{ index + 1 }}.{{ item.item.text }} </span>
-        <v-card-text style="padding-bottom: 0px;">
-          <v-row>
-            <v-radio-group v-model="radioGroup">
-              <v-radio
-                v-for="(n, i) in quiz[index].arrAns"
-                :key="i"
-                :label="`${n}`"
-                :value="n"
-              ></v-radio>
-            </v-radio-group>
-          </v-row>
+    <template v-if="!showResult">
+      <template v-for="(item, index) in quizAns">
+        <v-card-text class="quiz--text--zone" :key="index">
+          <span class="text--show">{{ index + 1 }}.{{ item.item.text }} </span>
+          <template>
+            <v-card-text style="padding-bottom: 0px;">
+              <v-row>
+                <v-radio-group column>
+                  <v-radio
+                    v-for="(n, i) in quizAns[index].arrAns"
+                    :key="i"
+                    :label="`${n}`"
+                    :value="n"
+                    @change="valueCheck(index, n)"
+                  ></v-radio>
+                </v-radio-group>
+              </v-row>
+            </v-card-text>
+          </template>
         </v-card-text>
-      </v-card-text>
+      </template>
+      <div class="my-2 mx-auto" >
+          <v-btn color="primary" @click="showResult = true">click me!</v-btn>
+        </div>
     </template>
+    <template v-if="showResult">
+      <v-row>
+        <v-col cols="11" v-for="(n, i) in quizAns" :key="i">
+          <showResultComponent :object="n" :id="i"></showResultComponent>
+        </v-col>
+      </v-row>
+    </template>
+    
   </v-card>
 </template>
 
 <script>
 // import Quiz from "../../controller/quiz";
+import showResultComponent from "../ContentFolder/card/card_show_test_result";
 export default {
-  props: ["quiz", "forcus", "quizBackbone"],
-  components: {},
+  props: ["quiz", "quizBackbone"],
+  components: { showResultComponent },
   data() {
     return {
-      // quiz: null,
-      number: null,
-      length: null,
-      html: "",
-      choose: null,
-      choose_false: null,
-      incorrect: [],
-      correct: [],
       quizAns: [],
+      showResult: null,
     };
   },
   mounted() {
@@ -43,70 +54,15 @@ export default {
       this.contruct();
     }
   },
-  watch: {
-    forcus() {
-      if (this.forcus != null) {
-        this.number = this.forcus;
-      }
-    },
-    quizBackbone(oldval, newval) {
-      if (oldval != newval) {
-        this.quizAns = this.quizBackbone;
-      }
-    },
-  },
   methods: {
     contruct() {
       this.number = 1;
-      this.length = this.quiz.length;
-      this.quizAns = this.quizBackbone;
+      this.quizAns = this.quiz;
       // console.log(this.quizAns);
-      this.$store.dispatch("test/setQuizAct", this.quizAns);
-      //sau này thêm id của bài kiểm tra, định vị bài kiểm tra trong localstorage
-      // localStorage.setItem('test',this.quizAns);
     },
-    sendQues(id, explain, value, arr, index_tick) {
-      // console.log(id, explain, value, arr);
-      let choose = value;
-      let ques = explain;
-      let text = arr.item.text;
-      let object = {
-        text: text,
-        explain: explain,
-        choose: value,
-        arr: arr,
-      };
-      console.log(index_tick);
-      // this.quizAns[index_tick].tick = value;
-      // this.quizAns[index_tick].id_choose = id;
-      // localStorage.setItem('test',this.quizAns);
-      this.$emit("sendQues", { value: value, id: id, index_tick: index_tick });
-      this.$store.dispatch("test/setQuizAct", this.quizAns);
-      if (ques === choose) {
-        this.choose = id;
-        this.$emit("changeCouterTrueChild");
-        this.correct.push(object);
-      } else {
-        this.choose_false = id;
-        this.incorrect.push(object);
-        this.$emit("changeCouterFalseChild");
-      }
-    },
-    returnLearn() {
-      this.number = 1;
-      this.correct = [];
-      this.incorrect = [];
-      this.$emit("reset");
-    },
-    prev() {
-      if (this.number > 1) {
-        this.number = this.number - 1;
-      }
-    },
-    next() {
-      if (this.number <= this.length - 1) {
-        this.number = this.number + 1;
-      }
+    valueCheck(index, data) {
+      this.quizAns[index].choose = data;
+      console.log(this.quizAns);
     },
   },
 };

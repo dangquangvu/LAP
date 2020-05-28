@@ -1,6 +1,5 @@
 import axios from "axios";
 // import authHeader from "../middleware/auth";
-
 const API_URL = "http://localhost:3334/card/";
 
 class cardService {
@@ -16,7 +15,7 @@ class cardService {
                     author_email: object.author_email,
                     author_img: object.img,
                     arrayCard: object.arrayCard,
-                }, { headers: { "Content-Type": "application/json" } }
+                }, { headers: { "Content-Type": "application/json" }, }
             )
             .then((response) => {
                 return response.data;

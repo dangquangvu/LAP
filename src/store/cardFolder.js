@@ -4,7 +4,9 @@
 export const cardFolder = {
     namespaced: true,
     state: {
-        arrCardFolder: [],
+        arrCardFolder: [
+
+        ],
         arrShow: [{
             author_id: "",
         }, ],

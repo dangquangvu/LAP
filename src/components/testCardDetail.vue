@@ -6,7 +6,6 @@
           <navTest
             :length="length"
             @changeForcus="changeForcus($event)"
-            :quizBackbone="quizBackbone"
           ></navTest>
         </v-col>
         <v-col cols="12" sm="9" md="7" lg="6">
@@ -31,33 +30,19 @@ export default {
       quiz: [
         {
           item: {
-            _id: "5ea480c8f139be2438237cdb",
+            _id: "5ea480c8f139be2438237cdd",
             index: 1,
             text: "i",
             explain: "k",
             author_id: "5e85acd79018430a08cacdae",
             author: "admin",
             cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.437Z",
-            updatedAt: "2020-04-25T18:26:16.437Z",
+            createdAt: "2020-04-25T18:26:16.444Z",
+            updatedAt: "2020-04-25T18:26:16.444Z",
             __v: 0,
           },
-          arrAns: ["f", "s", "k", "d"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cda",
-            index: 1,
-            text: "g",
-            explain: "h",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.427Z",
-            updatedAt: "2020-04-25T18:26:16.427Z",
-            __v: 0,
-          },
-          arrAns: ["s", "b", "h", "d"],
+          choose: null,
+          arrAns: ["d", "f", "s", "k"],
         },
         {
           item: {
@@ -72,7 +57,24 @@ export default {
             updatedAt: "2020-04-25T18:26:16.424Z",
             __v: 0,
           },
-          arrAns: ["m", "o", "f", "h"],
+          choose: null,
+          arrAns: ["k", "h", "o", "f"],
+        },
+        {
+          item: {
+            _id: "5ea480c8f139be2438237cda",
+            index: 1,
+            text: "g",
+            explain: "h",
+            author_id: "5e85acd79018430a08cacdae",
+            author: "admin",
+            cardFolderId: "5ea480c8f139be2438237cd6",
+            createdAt: "2020-04-25T18:26:16.427Z",
+            updatedAt: "2020-04-25T18:26:16.427Z",
+            __v: 0,
+          },
+          choose: null,
+          arrAns: ["d", "m", "s", "h"],
         },
         {
           item: {
@@ -87,52 +89,8 @@ export default {
             updatedAt: "2020-04-25T18:26:16.453Z",
             __v: 0,
           },
-          arrAns: ["o", "d", "h", "f"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cdf",
-            index: 1,
-            text: "p",
-            explain: "q",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.456Z",
-            updatedAt: "2020-04-25T18:26:16.457Z",
-            __v: 0,
-          },
-          arrAns: ["q", "s", "d", "h"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cdc",
-            index: 1,
-            text: "l",
-            explain: "m",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.441Z",
-            updatedAt: "2020-04-25T18:26:16.441Z",
-            __v: 0,
-          },
-          arrAns: ["h", "b", "o", "m"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cd7",
-            index: 1,
-            text: "a",
-            explain: "b",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.410Z",
-            updatedAt: "2020-04-25T18:26:16.410Z",
-            __v: 0,
-          },
-          arrAns: ["d", "b", "o", "q"],
+          choose: null,
+          arrAns: ["k", "h", "o", "f"],
         },
         {
           item: {
@@ -147,7 +105,56 @@ export default {
             updatedAt: "2020-04-25T18:26:16.459Z",
             __v: 0,
           },
-          arrAns: ["b", "d", "s", "m"],
+          choose: null,
+          arrAns: ["k", "m", "o", "s"],
+        },
+        {
+          item: {
+            _id: "5ea480c8f139be2438237cdf",
+            index: 1,
+            text: "p",
+            explain: "q",
+            author_id: "5e85acd79018430a08cacdae",
+            author: "admin",
+            cardFolderId: "5ea480c8f139be2438237cd6",
+            createdAt: "2020-04-25T18:26:16.456Z",
+            updatedAt: "2020-04-25T18:26:16.457Z",
+            __v: 0,
+          },
+          choose: null,
+          arrAns: ["q", "m", "f", "b"],
+        },
+        {
+          item: {
+            _id: "5ea480c8f139be2438237cd7",
+            index: 1,
+            text: "a",
+            explain: "b",
+            author_id: "5e85acd79018430a08cacdae",
+            author: "admin",
+            cardFolderId: "5ea480c8f139be2438237cd6",
+            createdAt: "2020-04-25T18:26:16.410Z",
+            updatedAt: "2020-04-25T18:26:16.410Z",
+            __v: 0,
+          },
+          choose: null,
+          arrAns: ["q", "d", "h", "b"],
+        },
+        {
+          item: {
+            _id: "5ea480c8f139be2438237cdc",
+            index: 1,
+            text: "l",
+            explain: "m",
+            author_id: "5e85acd79018430a08cacdae",
+            author: "admin",
+            cardFolderId: "5ea480c8f139be2438237cd6",
+            createdAt: "2020-04-25T18:26:16.441Z",
+            updatedAt: "2020-04-25T18:26:16.441Z",
+            __v: 0,
+          },
+          choose: null,
+          arrAns: ["d", "m", "k", "k"],
         },
         {
           item: {
@@ -162,22 +169,24 @@ export default {
             updatedAt: "2020-04-25T18:26:16.420Z",
             __v: 0,
           },
-          arrAns: ["o", "s", "d", "h"],
+          choose: null,
+          arrAns: ["k", "d", "s", "q"],
         },
         {
           item: {
-            _id: "5ea480c8f139be2438237cdd",
+            _id: "5ea480c8f139be2438237cdb",
             index: 1,
             text: "i",
             explain: "k",
             author_id: "5e85acd79018430a08cacdae",
             author: "admin",
             cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.444Z",
-            updatedAt: "2020-04-25T18:26:16.444Z",
+            createdAt: "2020-04-25T18:26:16.437Z",
+            updatedAt: "2020-04-25T18:26:16.437Z",
             __v: 0,
           },
-          arrAns: ["q", "k", "h", "o"],
+          choose: null,
+          arrAns: ["q", "f", "o", "k"],
         },
       ],
       length: null,
@@ -191,7 +200,7 @@ export default {
     for (let i = 0; i < this.length; i++) {
       let object = {
         id_parent: i,
-        id_choose: null,
+        valueChoose: null,
         tick: null,
       };
       arr.push(object);
@@ -202,11 +211,11 @@ export default {
     changeForcus(value) {
       this.forcus = value;
     },
-    sendQues(value){
-      console.log(value)
+    sendQues(value) {
+      console.log(value);
       this.quizBackbone[value.index_tick].id_choose = value.id;
       this.quizBackbone[value.index_tick].tick = value.value;
-    }
+    },
   },
   components: {
     navTest,
