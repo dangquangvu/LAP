@@ -3,18 +3,11 @@
     <template>
       <v-row>
         <v-col cols="12" sm="3" md="3" lg="2" class="offset-md-1 offset-lg-1">
-          <navTest
-            :length="length"
-            @changeForcus="changeForcus($event)"
-          ></navTest>
+          <navTest :score ='score'></navTest>
         </v-col>
-        <v-col cols="12" sm="9" md="7" lg="6">
-          <mainTest
-            :quiz="quiz"
-            :forcus="forcus"
-            :quizBackbone="quizBackbone"
-            @sendQues="sendQues($event)"
-          ></mainTest>
+        <v-col cols="12" sm="9" md="7" lg="6" v-if="quiz">
+          <mainTest :quiz="quiz"
+          @sendResult="sendResult($event)"></mainTest>
         </v-col>
       </v-row>
     </template>
@@ -24,198 +17,47 @@
 <script>
 import navTest from "../components/testCard/navTest";
 import mainTest from "../components/testCard/mainTest";
+import Test from "../controller/test";
+import CardService from "../controller/cardService";
+// const user = JSON.parse(localStorage.getItem("user"));
 export default {
   data() {
     return {
-      quiz: [
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cdd",
-            index: 1,
-            text: "i",
-            explain: "k",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.444Z",
-            updatedAt: "2020-04-25T18:26:16.444Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["d", "f", "s", "k"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cd9",
-            index: 1,
-            text: "e",
-            explain: "f",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.424Z",
-            updatedAt: "2020-04-25T18:26:16.424Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["k", "h", "o", "f"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cda",
-            index: 1,
-            text: "g",
-            explain: "h",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.427Z",
-            updatedAt: "2020-04-25T18:26:16.427Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["d", "m", "s", "h"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cde",
-            index: 1,
-            text: "n",
-            explain: "o",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.453Z",
-            updatedAt: "2020-04-25T18:26:16.453Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["k", "h", "o", "f"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237ce0",
-            index: 1,
-            text: "r",
-            explain: "s",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.459Z",
-            updatedAt: "2020-04-25T18:26:16.459Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["k", "m", "o", "s"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cdf",
-            index: 1,
-            text: "p",
-            explain: "q",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.456Z",
-            updatedAt: "2020-04-25T18:26:16.457Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["q", "m", "f", "b"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cd7",
-            index: 1,
-            text: "a",
-            explain: "b",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.410Z",
-            updatedAt: "2020-04-25T18:26:16.410Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["q", "d", "h", "b"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cdc",
-            index: 1,
-            text: "l",
-            explain: "m",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.441Z",
-            updatedAt: "2020-04-25T18:26:16.441Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["d", "m", "k", "k"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cd8",
-            index: 1,
-            text: "c",
-            explain: "d",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.420Z",
-            updatedAt: "2020-04-25T18:26:16.420Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["k", "d", "s", "q"],
-        },
-        {
-          item: {
-            _id: "5ea480c8f139be2438237cdb",
-            index: 1,
-            text: "i",
-            explain: "k",
-            author_id: "5e85acd79018430a08cacdae",
-            author: "admin",
-            cardFolderId: "5ea480c8f139be2438237cd6",
-            createdAt: "2020-04-25T18:26:16.437Z",
-            updatedAt: "2020-04-25T18:26:16.437Z",
-            __v: 0,
-          },
-          choose: null,
-          arrAns: ["q", "f", "o", "k"],
-        },
-      ],
-      length: null,
-      forcus: null,
-      quizBackbone: null,
+      quiz: null,
+      id: null,
+      score : null
     };
   },
   mounted() {
-    this.length = this.quiz.length;
-    let arr = [];
-    for (let i = 0; i < this.length; i++) {
-      let object = {
-        id_parent: i,
-        valueChoose: null,
-        tick: null,
-      };
-      arr.push(object);
-    }
-    this.quizBackbone = arr;
+    this.generateTest();
   },
   methods: {
-    changeForcus(value) {
-      this.forcus = value;
+    async generateTest() {
+      this.id = this.$route.params.id;
+      let adminFolder, data;
+      try {
+        adminFolder = await CardService.getInforCardFolder(this.id);
+      } catch (error) {
+        console.log(error);
+      }
+
+      let body = {
+        authorId: adminFolder.message[0].author_id,
+        author: adminFolder.message[0].author,
+        title: adminFolder.message[0].title,
+      };
+      try {
+        data = await Test.generationTest(body, this.id);
+        this.quiz = data.message.arrTest;
+        console.log(this.quiz);
+      } catch (error) {
+        console.log(error)
+      }
     },
-    sendQues(value) {
-      console.log(value);
-      this.quizBackbone[value.index_tick].id_choose = value.id;
-      this.quizBackbone[value.index_tick].tick = value.value;
-    },
+    sendResult(data){
+      console.log(data)
+      this.score = data;
+    }
   },
   components: {
     navTest,

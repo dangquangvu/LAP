@@ -20,46 +20,7 @@
             <v-list-item-title class="text--show">Kiểm Tra</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <!-- <v-col
-          cols="12"
-          style="overflow-y: scroll;"
-          min-height="100px"
-          max-height="250px"
-        >
-          <v-card
-            class="d-flex flex-wrap text-center justify-center"
-            color="grey lighten-2"
-            flat
-            tile
-            width="100vw"
-          >
-            <v-card
-              v-for="(item, index) in quizz"
-              :key="index"
-              class="pa-3 m1 px-0 "
-              outlined
-              tile
-              max-width="165px"
-              min-width="50px"
-              min-height="55px"
-              style="cursor: pointer"
-              @click="questionFocus(item.id_parent+1)"
-              :class="{'color' : quizz[index].id_choose != null }"
-            >
-              {{ index + 1 }}
-            </v-card>
-          </v-card>
-        </v-col>
-        <v-col cols="12" style="height: 40px;">
-          <v-card
-            class="d-flex flex-wrap text-center justify-center p2"
-            color=""
-            flat
-            tile
-          >
-            CountDown :{{ time }}
-          </v-card>
-        </v-col> -->
+
         <v-col cols="12" style="" min-height="70px">
           <v-card
             class="d-flex flex-wrap text-center justify-center p2"
@@ -67,8 +28,8 @@
             flat
             tile
           >
-            <v-card-title>
-              Last score :{{last_score}}
+            <v-card-title v-if="score != null">
+              score : {{score}}
             </v-card-title>
           </v-card>
         </v-col>
@@ -88,13 +49,11 @@
 
 <script>
 export default {
-  props: ["length"],
+  props: ['score'],
   data() {
     return {
       quizz: null,
-      // length: 10,
       time: "",
-      last_score : 10
     };
   },
   methods: {
@@ -117,10 +76,7 @@ export default {
         }
       }, 1000);
     },
-    questionFocus(value){
-        this.$emit("changeForcus", value);
-        console.log(value)
-    },
+    
 
   },
   mounted() {
@@ -192,3 +148,43 @@ export default {
     background-color: #a8d2f3!important;
 }
 </style>
+        <!-- <v-col
+          cols="12"
+          style="overflow-y: scroll;"
+          min-height="100px"
+          max-height="250px"
+        >
+          <v-card
+            class="d-flex flex-wrap text-center justify-center"
+            color="grey lighten-2"
+            flat
+            tile
+            width="100vw"
+          >
+            <v-card
+              v-for="(item, index) in quizz"
+              :key="index"
+              class="pa-3 m1 px-0 "
+              outlined
+              tile
+              max-width="165px"
+              min-width="50px"
+              min-height="55px"
+              style="cursor: pointer"
+              @click="questionFocus(item.id_parent+1)"
+              :class="{'color' : quizz[index].id_choose != null }"
+            >
+              {{ index + 1 }}
+            </v-card>
+          </v-card>
+        </v-col>
+        <v-col cols="12" style="height: 40px;">
+          <v-card
+            class="d-flex flex-wrap text-center justify-center p2"
+            color=""
+            flat
+            tile
+          >
+            CountDown :{{ time }}
+          </v-card>
+        </v-col> -->

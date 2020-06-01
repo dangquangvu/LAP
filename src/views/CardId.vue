@@ -25,10 +25,7 @@
       </v-btn>
       <v-btn icon large>
         <v-avatar size="32px" item>
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-        /></v-avatar>
+          <img alt="Vue logo" src="../assets/images.png" /></v-avatar>
       </v-btn>
     </v-app-bar>
     

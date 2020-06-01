@@ -140,7 +140,31 @@
         </v-row>
       </v-col>
     </v-row>
-
+    <v-row>
+      <v-col xs="12" sm="12" md="10" lg="8" class="offset-md-1 offset-lg-1">
+        <v-card class="mx-auto" max-width="100%">
+          <v-card-actions>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  text
+                  color="deep-purple accent-4"
+                  v-on="on"
+                  @click="deleteFlashCard()"
+                >
+                  <ion-icon
+                    name="trash-outline"
+                    style="font-size: 25px;color: #4257b2;fill: #4257b2;"
+                    class="pr-2 text--grey"
+                  ></ion-icon>
+                </v-btn>
+              </template>
+              <span>delete flashcard</span>
+            </v-tooltip>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
     <div v-for="(n, i) in arr" :key="i" class="grey lighten-5">
       <v-col xs="12" sm="12" md="10" lg="8" class="offset-md-1 offset-lg-1">
         <cardInfor :card="n"></cardInfor>
@@ -264,6 +288,17 @@ export default {
           });
         this.$router.push(`/test/${this.id}`);
       }
+    },
+    deleteFlashCard() {
+      console.log("xxx");
+      cardService
+        .deleteCardFolder(this.id)
+        .then(() => {
+          setTimeout(this.$router.push("/home/main"), 1000);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   components: { cardInfor, flashCard, carousel },

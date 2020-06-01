@@ -23,7 +23,7 @@
         </v-card-text>
       </template>
       <div class="my-2 mx-auto" >
-          <v-btn color="primary" @click="showResult = true">click me!</v-btn>
+          <v-btn color="primary" @click="sendResult()">click me!</v-btn>
         </div>
     </template>
     <template v-if="showResult">
@@ -62,8 +62,26 @@ export default {
     },
     valueCheck(index, data) {
       this.quizAns[index].choose = data;
-      console.log(this.quizAns);
     },
+    scoreResult(){
+      console.log(this.quizAns);
+      let correct =0;
+      let length = this.quizAns.length;
+      console.log(this.quizAns)
+      this.quizAns.map((item)=>{
+        console.log(item.item.explain ,item.choose)
+        if(item.item.explain == item.choose){
+          correct += 1;
+        }
+      })
+      let score = parseFloat((correct/length)*10);
+      console.log(score,correct,length)
+      this.$emit('sendResult', score)
+    },
+    sendResult(){
+      this.showResult = true;
+      this.scoreResult();
+    }
   },
 };
 </script>

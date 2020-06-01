@@ -10,6 +10,7 @@ import RegisterPage from "../views/register.vue";
 import CardId from "../views/CardId.vue"
 import leanCard from "../views/leanCard"
 import testCard from "../views/test.vue"
+import SearchScreen from "../views/SearchScreen.vue"
 
 Vue.use(VueRouter);
 
@@ -32,6 +33,10 @@ export const router = new VueRouter({
         {
             path: "/test/:id?",
             component: testCard,
+        },
+        {
+            path: "/search/:text?",
+            component: SearchScreen,
         },
         {
             path: "/home",

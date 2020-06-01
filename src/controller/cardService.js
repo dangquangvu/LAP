@@ -7,15 +7,15 @@ class cardService {
         return axios
             .post(
                 API_URL + "createCardFolder", {
-                    title: object.title,
-                    description: object.description,
-                    total: object.arrayCard.length,
-                    author: object.author,
-                    author_id: object.author_id,
-                    author_email: object.author_email,
-                    author_img: object.img,
-                    arrayCard: object.arrayCard,
-                }, { headers: { "Content-Type": "application/json" }, }
+                title: object.title,
+                description: object.description,
+                total: object.arrayCard.length,
+                author: object.author,
+                author_id: object.author_id,
+                author_email: object.author_email,
+                author_img: object.img,
+                arrayCard: object.arrayCard,
+            }, { headers: { "Content-Type": "application/json" }, }
             )
             .then((response) => {
                 return response.data;
@@ -28,8 +28,8 @@ class cardService {
         return axios
             .post(
                 API_URL + "getAllCardFolder", {
-                    author_id: id,
-                }, { headers: { "Content-Type": "application/json" } }
+                author_id: id,
+            }, { headers: { "Content-Type": "application/json" } }
             )
             .then((response) => {
                 return response.data;
@@ -55,8 +55,16 @@ class cardService {
             API_URL + `getInforCardFolder/${id}`
         ).then(res => {
             return res.data;
-        }).
-        catch(err => {
+        }).catch(err => {
+            return err.data;
+        })
+    }
+    deleteCardFolder(id) {
+        return axios.post(
+            API_URL + `deleteFlashcard/${id}`
+        ).then(res => {
+            return res.data;
+        }).catch(err => {
             return err.data;
         })
     }
